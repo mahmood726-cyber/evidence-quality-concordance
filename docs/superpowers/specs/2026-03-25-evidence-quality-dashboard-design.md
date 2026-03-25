@@ -30,10 +30,11 @@ Build a single-file HTML dashboard that presents unified evidence quality grades
 2. Left-join BiasForensics (307) by `review_id`
 3. Left-join PredictionGap (403) by `review_id`
 4. Left-join ORB (403) by `review_id`
-5. For each review, count non-null sources → `completeness` field (2, 3, or 4)
-6. Compute quality score using available components with re-weighted scoring
-7. Assign grade (A/B/C/D) or "Insufficient Data" if <2 components
-8. Output `data/reviews.json` — JSON array embedded in the dashboard
+5. For each review, count non-null sources → `completeness` field (3 or 4 in practice — FA, PG, and ORB all have 403 identical review_ids; only BF has 307, so 96 reviews will be 3/4)
+6. **Remove all default fallbacks for missing components.** When a source lookup returns None, the entire component sub-object must be null. Do NOT assign default values like "Suspected" or 50 — the existing build script does this incorrectly and it must be fixed.
+7. Compute quality score using available components with re-weighted scoring
+8. Assign grade (A/B/C/D). All reviews have >= 3 components so "Insufficient Data" cannot occur, but include as a defensive fallback for future data changes.
+9. Output `data/reviews.json` — JSON array embedded in the dashboard
 
 ### Source file paths
 
@@ -62,7 +63,7 @@ C:\OutcomeReportingBias\data\output\orb_results.csv           (403 rows, 11 cols
 - `petpeese_theta`, `petpeese_method`
 
 **From PredictionGap:**
-- `discordance` (CONCORDANT_SIG/CONCORDANT_NS/FALSE_REASSURANCE/HIDDEN_SIGNAL)
+- `discordance` (CONCORDANT_SIG/CONCORDANT_NS/FALSE_REASSURANCE — only 3 values exist in data)
 - `pi_ci_ratio` (prediction interval / CI width ratio)
 - `tau2`, `I2`
 - `ci_lo`, `ci_hi`, `pi_lo`, `pi_hi`
@@ -129,8 +130,12 @@ Missing components are `null` (e.g., `"bias": null` if review not in BiasForensi
 |-----------|--------|---------------|
 | Fragility | 35% | `robustness_score` directly (0-100) |
 | Bias | 25% | Clean=100, Suspected=60, Confirmed=20, Discordant=40 |
-| Prediction | 25% | CONCORDANT_SIG=100, CONCORDANT_NS=60, HIDDEN_SIGNAL=50, FALSE_REASSURANCE=20 |
-| ORB | 15% | Low_Risk=100, Moderate_Risk=60, High_Risk=20 |
+| Prediction | 25% | CONCORDANT_SIG=100, CONCORDANT_NS=60, FALSE_REASSURANCE=20 |
+| ORB | 15% | `100 - orb_score` (continuous, 0-100; higher = less bias risk) |
+
+**Note on Prediction:** Only 3 discordance values exist in the data (57 CONCORDANT_SIG, 214 CONCORDANT_NS, 132 FALSE_REASSURANCE). HIDDEN_SIGNAL does not appear. If encountered in future data, map to 50.
+
+**Note on ORB:** Uses the continuous `orb_score` (range 0-90 in data) inverted to 0-100 quality scale, rather than the 3-level categorical `orb_class`. This provides more granular scoring, consistent with Fragility using its continuous `robustness_score`.
 
 ### Re-weighting for missing components
 
@@ -161,7 +166,7 @@ Single scrollable page, no tabs. Dark mode toggle in header.
 
 - Title: "Evidence Quality Dashboard"
 - Subtitle: "Unified assessment of N Cochrane reviews across 4 dimensions"
-- Completeness filter: radio buttons [All | 4/4 sources | 3+ sources]
+- Completeness filter: radio buttons [All (403) | Complete 4/4 (307) | Bias missing 3/4 (96)]
 
 ### Section 1 — Summary Cards (stat boxes)
 
@@ -175,7 +180,9 @@ All update dynamically when the completeness filter changes.
 
 ### Section 2 — Grade Distribution
 
-Horizontal bar chart (SVG). 4 bars (A/B/C/D), colored by grade. Each bar stacked by completeness tier (4/4 darker, 3/4 lighter, 2/4 lightest). Shows both count and percentage.
+Horizontal bar chart (SVG). 4 bars (A/B/C/D), colored by grade. Each bar stacked by completeness tier (4/4 darker, 3/4 lighter). Shows both count and percentage.
+
+**All visualizations (summary cards, grade distribution, heatmap, table) filter in sync with the completeness filter and text search.**
 
 ### Section 3 — Component Heatmap
 
@@ -187,9 +194,9 @@ Cell colors:
 - **Red**: component score < 40 (poor)
 - **Grey**: component missing (null)
 
-Hovering a cell shows a tooltip with the actual score and classification. Clicking a row scrolls to its detail in the table below.
+At ~1.5px per row, individual cells are too small for hover/click interaction. The heatmap is **purely visual** — a "data fingerprint" showing the overall quality pattern across the evidence base. The sortable table below is the interactive view.
 
-Dimensions: ~800x600px. For 403 rows, each row is ~1.5px tall — shows the pattern, not individual values. This is a "data fingerprint" visualization.
+Dimensions: ~800x600px. No tooltips or click handlers on the heatmap itself.
 
 ### Section 4 — Sortable Table
 
@@ -208,12 +215,12 @@ Dimensions: ~800x600px. For 403 rows, each row is ~1.5px tall — shows the patt
 
 - Grade badges colored by grade
 - Component cells colored by status (green/amber/red/grey)
-- Text filter on review ID / analysis name
-- Click any row to expand detail panel (accordion)
+- Single text input performs substring search across both `review_id` and `analysis_name`. Combines with completeness filter using AND logic.
+- Click any row (or press Enter/Space when focused) to expand detail panel (accordion)
 
 ### Section 5 — Expanded Detail Panel (accordion)
 
-When a table row is clicked, an inline panel expands below it showing 4 cards:
+When a table row is clicked (or Enter/Space pressed), an inline panel expands below it showing a header line with the review DOI (text, not linked — linking is out of scope) and 4 component cards:
 
 **Fragility Card:**
 - Robustness score gauge (0-100 with colored arc)
@@ -246,7 +253,7 @@ Missing components shown as greyed-out card with "Data not available for this re
 
 - "Evidence Quality Dashboard v1.0 — Browser-based, no data leaves your device."
 - Dark mode toggle (if not in header)
-- Export: [CSV] [PNG] buttons (filtered data export, summary chart screenshot)
+- Export: [CSV] exports all currently filtered rows; [PNG] captures the Grade Distribution chart (Section 2) via canvas rendering
 
 ## 4. Visual Design
 
@@ -256,6 +263,7 @@ Follow existing portfolio conventions:
 - Card-based layout with subtle shadows
 - Print styles hiding interactive elements
 - Responsive: mobile stacks columns, heatmap scrolls horizontally
+- localStorage prefix: `eqd_` for persisted state (theme preference, last sort column)
 
 ## 5. Integration Map
 
