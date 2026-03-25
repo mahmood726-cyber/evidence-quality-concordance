@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cochrane Quality Concordance — Interactive Dashboard</title>
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+<style>
+:root { --bg:#0f1117; --bg2:#1a1d27; --bg3:#252836; --text:#e4e6eb; --text2:#a0a3b1; --accent:#6c8cff; --green:#51cf66; --red:#ff6b6b; --orange:#ffa94d; --yellow:#ffd43b; --border:#2d3041; --radius:10px; }
+[data-theme="light"] { --bg:#f5f6fa; --bg2:#fff; --bg3:#eef0f5; --text:#1a1d27; --text2:#5a5d6e; --border:#d8dae5; }
+*{margin:0;padding:0;box-sizing:border-box;} body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;}
+
+.header{text-align:center;padding:40px 20px 20px;border-bottom:1px solid var(--border);}
+.header h1{font-size:1.8rem;} .header h1 span{color:var(--accent);}
+.header .sub{color:var(--text2);font-size:0.95rem;margin-top:8px;}
+
+.controls{display:flex;justify-content:center;gap:12px;padding:16px;flex-wrap:wrap;}
+.controls button{padding:6px 14px;border-radius:8px;border:1px solid var(--border);background:var(--bg3);color:var(--text);font-size:0.82rem;cursor:pointer;}
+.controls button:hover{border-color:var(--accent);color:var(--accent);}
+
+.stats-bar{display:flex;justify-content:center;gap:24px;padding:20px;flex-wrap:wrap;}
+.stat{text-align:center;} .stat .num{font-size:2rem;font-weight:700;} .stat .label{font-size:0.78rem;color:var(--text2);}
+.stat.blue .num{color:var(--accent);} .stat.green .num{color:var(--green);} .stat.red .num{color:var(--red);} .stat.orange .num{color:var(--orange);}
+
+.container{max-width:1400px;margin:0 auto;padding:20px;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.panel{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:20px;}
+.panel h3{font-size:0.95rem;margin-bottom:12px;color:var(--text2);}
+
+.table-wrap{overflow-x:auto;max-height:500px;overflow-y:auto;}
+table{width:100%;border-collapse:collapse;font-size:0.8rem;}
+th,td{padding:6px 10px;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap;}
+th{position:sticky;top:0;background:var(--bg3);font-weight:600;cursor:pointer;}
+th:hover{color:var(--accent);} tr:hover{background:var(--bg3);}
+
+.grade{display:inline-block;width:28px;height:28px;border-radius:50%;text-align:center;line-height:28px;font-weight:700;font-size:0.8rem;}
+.grade-A{background:rgba(81,207,102,0.2);color:var(--green);}
+.grade-B{background:rgba(108,140,255,0.2);color:var(--accent);}
+.grade-C{background:rgba(255,169,77,0.2);color:var(--orange);}
+.grade-D{background:rgba(255,107,107,0.2);color:var(--red);}
+
+.file-input{text-align:center;padding:40px;}
+.file-input label{display:inline-block;padding:16px 32px;border:2px dashed var(--border);border-radius:var(--radius);cursor:pointer;color:var(--text2);}
+.file-input label:hover{border-color:var(--accent);color:var(--accent);}
+input[type=file]{display:none;}
+
+@media(max-width:800px){.grid2{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Cochrane <span>Quality Concordance</span></h1>
+  <p class="sub">6-dimensional quality profiling of 403 Cochrane meta-analyses</p>
+</div>
+
+<div class="file-input" id="fileInput">
+  <label for="csvFile">Drop or click to load <strong>unified_concordance.csv</strong></label>
+  <input type="file" id="csvFile" accept=".csv">
+</div>
+
+<div id="app" style="display:none;">
+
+<div class="stats-bar" id="statsBar"></div>
+
+<div class="controls">
+  <button onclick="filterGrade('ALL')">All</button>
+  <button onclick="filterGrade('A')" style="color:var(--green)">Grade A</button>
+  <button onclick="filterGrade('B')" style="color:var(--accent)">Grade B</button>
+  <button onclick="filterGrade('C')" style="color:var(--orange)">Grade C</button>
+  <button onclick="filterGrade('D')" style="color:var(--red)">Grade D</button>
+  <button onclick="toggleTheme()">Theme</button>
+  <button onclick="exportCSV()">Export</button>
+</div>
+
+<div class="container">
+
+<div class="grid2">
+  <div class="panel">
+    <h3>Correlation Heatmap (Spearman)</h3>
+    <div id="heatmap"></div>
+  </div>
+  <div class="panel">
+    <h3>Grade Distribution</h3>
+    <div id="gradeChart"></div>
+  </div>
+</div>
+
+<div class="grid2">
+  <div class="panel">
+    <h3>Dimension Radar by Grade</h3>
+    <div id="radarChart"></div>
+  </div>
+  <div class="panel">
+    <h3>Composite Score Distribution</h3>
+    <div id="histChart"></div>
+  </div>
+</div>
+
+<div class="grid2">
+  <div class="panel">
+    <h3>Fragility vs Publication Bias (rho=0.303)</h3>
+    <div id="scatter1"></div>
+  </div>
+  <div class="panel">
+    <h3>Pub Bias vs ORB (rho=0.468, strongest)</h3>
+    <div id="scatter2"></div>
+  </div>
+</div>
+
+<div class="panel" style="margin-bottom:16px;">
+  <h3>Review-Level Quality Profiles</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th onclick="sortBy('review_id')">ID</th>
+        <th onclick="sortBy('k')">k</th>
+        <th onclick="sortBy('grade')">Grade</th>
+        <th onclick="sortBy('composite_score')">Score</th>
+        <th onclick="sortBy('d1_fragility_norm')">Fragility</th>
+        <th onclick="sortBy('d2_bias_norm')">Pub Bias</th>
+        <th onclick="sortBy('d3_prediction_norm')">Pred Gap</th>
+        <th onclick="sortBy('d4_orb_norm')">ORB</th>
+        <th onclick="sortBy('d5_repro_norm')">Repro</th>
+        <th onclick="sortBy('d6_overlap_norm')">Overlap</th>
+      </tr></thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+</div>
+</div>
+
+<script>
+let DATA=[], FILTERED=[], sortCol='composite_score', sortAsc=false;
+const DIMS=['d1_fragility_norm','d2_bias_norm','d3_prediction_norm','d4_orb_norm','d5_repro_norm','d6_overlap_norm'];
+const DIM_LABELS=['Fragility','Pub Bias','Pred Gap','ORB','Reproducibility','Overlap'];
+
+function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
+function lo(x){return Object.assign({paper_bgcolor:'rgba(0,0,0,0)',plot_bgcolor:'rgba(0,0,0,0)',font:{color:css('--text'),size:11},margin:{t:20,b:40,l:50,r:20}},x);}
+
+document.getElementById('csvFile').addEventListener('change',function(e){
+  const f=e.target.files[0]; if(!f)return;
+  const r=new FileReader();
+  r.onload=function(ev){
+    const lines=ev.target.result.trim().split('\n');
+    const hdr=lines[0].split(',');
+    DATA=[];
+    for(let i=1;i<lines.length;i++){
+      const v=lines[i].split(','), row={};
+      hdr.forEach((h,j)=>row[h.trim()]=v[j]?v[j].trim():'');
+      ['k','composite_score','d1_fragility_norm','d2_bias_norm','d3_prediction_norm','d4_orb_norm','d5_repro_norm','d6_overlap_norm','fragility_score','orb_score','pred_pi_ci_ratio','pred_I2','bias_egger_p','orb_excess_sig'].forEach(k=>{row[k]=parseFloat(row[k])||0;});
+      DATA.push(row);
+    }
+    FILTERED=[...DATA];
+    document.getElementById('fileInput').style.display='none';
+    document.getElementById('app').style.display='block';
+    renderAll();
+  };
+  r.readAsText(f);
+});
+
+function filterGrade(g){FILTERED=g==='ALL'?[...DATA]:DATA.filter(r=>r.grade===g);renderAll();}
+function sortBy(col){if(sortCol===col)sortAsc=!sortAsc;else{sortCol=col;sortAsc=true;}FILTERED.sort((a,b)=>{const va=typeof a[col]==='number'?a[col]:String(a[col]),vb=typeof b[col]==='number'?b[col]:String(b[col]);return sortAsc?(va>vb?1:-1):(va<vb?1:-1);});renderTable();}
+
+function renderAll(){renderStats();renderHeatmap();renderGrades();renderRadar();renderHist();renderScatters();renderTable();}
+
+function renderStats(){
+  const n=DATA.length,nA=DATA.filter(r=>r.grade==='A').length,nD=DATA.filter(r=>r.grade==='D').length;
+  const scores=DATA.map(r=>r.composite_score),mean=(scores.reduce((a,b)=>a+b,0)/n).toFixed(1);
+  document.getElementById('statsBar').innerHTML=`
+    <div class="stat blue"><div class="num">${n}</div><div class="label">Reviews</div></div>
+    <div class="stat green"><div class="num">${nA}</div><div class="label">Grade A</div></div>
+    <div class="stat orange"><div class="num">${mean}</div><div class="label">Mean Score</div></div>
+    <div class="stat red"><div class="num">0.179</div><div class="label">Mean |rho| (orthogonal)</div></div>
+  `;
+}
+
+function renderHeatmap(){
+  // Compute Spearman from data
+  const n=DATA.length, mat=[];
+  for(let i=0;i<6;i++){
+    const row=[];
+    for(let j=0;j<6;j++){
+      if(i===j){row.push(1);continue;}
+      const x=DATA.map(r=>r[DIMS[i]]),y=DATA.map(r=>r[DIMS[j]]);
+      row.push(spearman(x,y));
+    }
+    mat.push(row);
+  }
+  Plotly.newPlot('heatmap',[{z:mat,x:DIM_LABELS,y:DIM_LABELS,type:'heatmap',colorscale:[[0,'#ff6b6b'],[0.5,'#1a1d27'],[1,'#51cf66']],zmin:-0.5,zmax:0.5,text:mat.map(r=>r.map(v=>v.toFixed(3))),texttemplate:'%{text}',hoverinfo:'z'}],lo({height:350,margin:{l:100,b:80}}),{responsive:true});
+}
+
+function spearman(x,y){
+  const n=x.length,rx=rank(x),ry=rank(y);
+  const d2=rx.reduce((a,v,i)=>a+(v-ry[i])**2,0);
+  return 1-6*d2/(n*(n*n-1));
+}
+function rank(arr){
+  const idx=arr.map((v,i)=>[v,i]).sort((a,b)=>a[0]-b[0]);
+  const r=new Array(arr.length);
+  let i=0;
+  while(i<idx.length){let j=i;while(j<idx.length-1&&idx[j+1][0]===idx[j][0])j++;const avg=(i+j)/2+1;for(let k=i;k<=j;k++)r[idx[k][1]]=avg;i=j+1;}
+  return r;
+}
+
+function renderGrades(){
+  const counts={A:0,B:0,C:0,D:0};DATA.forEach(r=>counts[r.grade]++);
+  Plotly.newPlot('gradeChart',[{values:Object.values(counts),labels:['A','B','C','D'],type:'pie',hole:0.5,marker:{colors:['#51cf66','#6c8cff','#ffa94d','#ff6b6b']},textinfo:'label+percent',textfont:{color:css('--text')}}],lo({height:350,showlegend:false}),{responsive:true});
+}
+
+function renderRadar(){
+  const grades=['A','B','C','D'],colors=['#51cf66','#6c8cff','#ffa94d','#ff6b6b'];
+  const traces=grades.map((g,gi)=>{
+    const subset=DATA.filter(r=>r.grade===g);
+    if(subset.length===0)return null;
+    const means=DIMS.map(d=>subset.reduce((a,r)=>a+r[d],0)/subset.length);
+    return{type:'scatterpolar',r:[...means,means[0]],theta:[...DIM_LABELS,DIM_LABELS[0]],fill:'toself',name:`Grade ${g} (n=${subset.length})`,line:{color:colors[gi]},fillcolor:colors[gi]+'22'};
+  }).filter(Boolean);
+  Plotly.newPlot('radarChart',traces,lo({height:350,polar:{radialaxis:{visible:true,range:[0,100],gridcolor:css('--border')},bgcolor:'rgba(0,0,0,0)'},legend:{x:0,y:-0.15,orientation:'h'}}),{responsive:true});
+}
+
+function renderHist(){
+  Plotly.newPlot('histChart',[{x:FILTERED.map(r=>r.composite_score),type:'histogram',nbinsx:30,marker:{color:css('--accent'),line:{width:0.5,color:css('--border')}}}],lo({height:350,xaxis:{title:'Composite Quality Score',gridcolor:css('--border')},yaxis:{title:'Count',gridcolor:css('--border')}}),{responsive:true});
+}
+
+function renderScatters(){
+  const gc=r=>r.grade==='A'?'#51cf66':r.grade==='B'?'#6c8cff':r.grade==='C'?'#ffa94d':'#ff6b6b';
+  Plotly.newPlot('scatter1',[{x:FILTERED.map(r=>r.d1_fragility_norm),y:FILTERED.map(r=>r.d2_bias_norm),mode:'markers',marker:{color:FILTERED.map(gc),size:5,opacity:0.7},text:FILTERED.map(r=>`${r.review_id} (${r.grade})`),hoverinfo:'text+x+y'}],lo({height:300,xaxis:{title:'Fragility (0=fragile, 100=robust)',gridcolor:css('--border')},yaxis:{title:'Pub Bias (0=biased, 100=clean)',gridcolor:css('--border')}}),{responsive:true});
+
+  Plotly.newPlot('scatter2',[{x:FILTERED.map(r=>r.d2_bias_norm),y:FILTERED.map(r=>r.d4_orb_norm),mode:'markers',marker:{color:FILTERED.map(gc),size:5,opacity:0.7},text:FILTERED.map(r=>`${r.review_id} (${r.grade})`),hoverinfo:'text+x+y'}],lo({height:300,xaxis:{title:'Pub Bias (0=biased, 100=clean)',gridcolor:css('--border')},yaxis:{title:'ORB (0=high risk, 100=low risk)',gridcolor:css('--border')}}),{responsive:true});
+}
+
+function renderTable(){
+  document.getElementById('tableBody').innerHTML=FILTERED.map(r=>{
+    const gc={'A':'grade-A','B':'grade-B','C':'grade-C','D':'grade-D'}[r.grade];
+    return `<tr>
+      <td>${r.review_id}</td><td>${r.k}</td>
+      <td><span class="grade ${gc}">${r.grade}</span></td>
+      <td>${r.composite_score.toFixed(1)}</td>
+      <td>${r.d1_fragility_norm.toFixed(0)}</td><td>${r.d2_bias_norm.toFixed(0)}</td>
+      <td>${r.d3_prediction_norm.toFixed(0)}</td><td>${r.d4_orb_norm.toFixed(0)}</td>
+      <td>${r.d5_repro_norm.toFixed(0)}</td><td>${r.d6_overlap_norm.toFixed(0)}</td>
+    </tr>`;
+  }).join('');
+}
+
+function toggleTheme(){const n=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);renderAll();}
+function exportCSV(){
+  const h='review_id,k,grade,composite_score,fragility,pub_bias,pred_gap,orb,repro,overlap\n';
+  const csv=h+FILTERED.map(r=>[r.review_id,r.k,r.grade,r.composite_score,r.d1_fragility_norm,r.d2_bias_norm,r.d3_prediction_norm,r.d4_orb_norm,r.d5_repro_norm,r.d6_overlap_norm].join(',')).join('\n');
+  const b=new Blob([csv],{type:'text/csv'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='concordance_export.csv';document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u);
+}
+</script>
+</body>
+</html>
