@@ -1,0 +1,11 @@
+review_id,analysis_name,k,robustness_score,fragility_class,bias_class,egger_sig,n_detect,pi_ci_ratio,discordance,orb_class,orb_score_raw,excess_sig,quality_score,quality_grade
+CD000028,Cause of cardiovascular mortality,21,66.67,Fragile,Confirmed,1,1,1.07,CONCORDANT_SIG,Low_Risk,10,-0.57,68.3,B
+CD000143,Extubation failure,12,87.55,Moderate,Suspected,0,0,3.17,CONCORDANT_NS,Moderate_Risk,40,1.9,69.6,B
+CD000219,Pain,21,49.06,Unstable,Suspected,0,0,2.82,FALSE_REASSURANCE,Moderate_Risk,35,1.94,46.2,C
+CD000478,Failure to maintain remission - all trials,13,69.05,Fragile,Suspected,0,0,1.12,CONCORDANT_SIG,Low_Risk,10,0.97,79.2,B
+CD000547,Individual adverse events,48,66.6,Fragile,Confirmed,1,2,5.39,FALSE_REASSURANCE,Moderate_Risk,25,-4.48,42.3,C
+CD001155,"Alendronate vs Other active agent, Secondary",59,93.81,Robust,Clean,0,0,4.61,CONCORDANT_NS,Moderate_Risk,40,5.2,81.8,A
+CD001321,Symptomatic UTI: culture-verified UTI,27,57.82,Fragile,Confirmed,1,2,3.91,FALSE_REASSURANCE,Moderate_Risk,35,0.08,39.2,D
+CD001396,Response rates,30,66.67,Fragile,Confirmed,1,2,3.08,CONCORDANT_SIG,Low_Risk,15,1.52,68.3,B
+CD001431,Participation in decision-making - all studies,61,93.78,Robust,Suspected,0,0,5.01,CONCORDANT_NS,High_Risk,65,10.86,65.8,B
+CD001533,Adverse events,21,81.67,Moderate,Suspected,0,0,1.91,CONCORDANT_NS,High_Risk,50,2.02,61.6,B
