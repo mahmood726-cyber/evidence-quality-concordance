@@ -199,7 +199,7 @@ body {
 /* ===== GRADE COLORS ===== */
 .grade-a { color: #198754; }
 .grade-b { color: #2563eb; }
-.grade-c { color: #b45309; }
+.grade-c { background: #fff3cd; color: #664d03; }
 .grade-d { color: #dc3545; }
 
 .grade-badge {
@@ -697,7 +697,7 @@ function renderHeatmap(data) {
   }
 
   var sorted = data.slice().sort(function(a, b) {
-    return (b.quality_score || 0) - (a.quality_score || 0);
+    return (b.quality_score != null ? b.quality_score : 0) - (a.quality_score != null ? a.quality_score : 0);
   });
 
   var cols      = ['fragility', 'bias', 'prediction', 'orb'];
@@ -776,6 +776,32 @@ function renderHeatmap(data) {
 /* ================================================================
    RENDER TABLE (sortable stub, full sort in Task 6)
 ================================================================ */
+function getSortValue(r, col) {
+  switch (col) {
+    case 'review_id':    return r.review_id;
+    case 'analysis_name': return (r.analysis_name || '').toLowerCase();
+    case 'k':            return r.k;
+    case 'quality_score': return r.quality_score != null ? r.quality_score : -1;
+    case 'quality_grade': return r.quality_grade;
+    case 'completeness': return r.completeness;
+    case 'fragility':    return r.fragility ? r.fragility.classification : '';
+    case 'bias':         return r.bias ? r.bias.bias_class : '';
+    case 'prediction':   return r.prediction ? r.prediction.discordance : '';
+    case 'orb':          return r.orb ? r.orb.orb_class : '';
+    default:             return '';
+  }
+}
+
+function sortTable(col) {
+  if (sortCol === col) {
+    sortAsc = !sortAsc;
+  } else {
+    sortCol = col;
+    sortAsc = false;
+  }
+  renderTable(filtered);
+}
+
 function renderTable(data) {
   var container = document.getElementById('tableContainer');
   var countEl   = document.getElementById('tableCount');
@@ -787,20 +813,39 @@ function renderTable(data) {
     return;
   }
 
+  var sortedData = data.slice().sort(function(a, b) {
+    var va = getSortValue(a, sortCol);
+    var vb = getSortValue(b, sortCol);
+    if (va === vb) return 0;
+    if (va === null || va === undefined) return 1;
+    if (vb === null || vb === undefined) return -1;
+    var cmp = va < vb ? -1 : 1;
+    return sortAsc ? cmp : -cmp;
+  });
+
+  var colDefs = [
+    { key: 'review_id',    label: 'Review ID' },
+    { key: 'analysis_name', label: 'Name' },
+    { key: 'k',            label: 'k',        style: 'text-align:center;' },
+    { key: 'completeness', label: 'Complete', style: 'text-align:center;' },
+    { key: 'quality_score', label: 'Score' },
+    { key: 'quality_grade', label: 'Grade' }
+  ];
+
   var html = [];
   html.push('<table class="sortable-table"><thead><tr>');
-  html.push('<th>Review ID</th>');
-  html.push('<th>Name</th>');
-  html.push('<th style="text-align:center;">k</th>');
-  html.push('<th style="text-align:center;">Complete</th>');
-  html.push('<th>Score</th>');
-  html.push('<th>Grade</th>');
+  colDefs.forEach(function(cd) {
+    var cls = sortCol === cd.key ? (sortAsc ? 'sort-asc' : 'sort-desc') : '';
+    var st  = cd.style ? ' style="' + cd.style + '"' : '';
+    html.push('<th data-col="' + cd.key + '" class="' + cls + '"' + st + ' onclick="sortTable(\'' + cd.key + '\')">' + cd.label + '</th>');
+  });
   html.push('</tr></thead><tbody>');
 
-  data.forEach(function(r, idx) {
+  sortedData.forEach(function(r) {
+    var origIdx = filtered.indexOf(r);
     var gl = (r.quality_grade || 'I').toLowerCase();
     var gc = 'grade-' + (gl === 'insufficient' ? 'i' : gl);
-    html.push('<tr data-idx="' + idx + '" tabindex="0" role="button" aria-expanded="false" onclick="toggleDetail(' + idx + ')" onkeydown="handleRowKey(event,' + idx + ')">');
+    html.push('<tr data-idx="' + origIdx + '" tabindex="0" role="button" aria-expanded="false" onclick="toggleDetail(' + origIdx + ')" onkeydown="handleRowKey(event,' + origIdx + ')">');
     html.push('<td>' + escapeHtml(r.review_id) + '</td>');
     html.push('<td style="max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="' + escapeHtml(r.analysis_name) + '">' + escapeHtml(r.analysis_name) + '</td>');
     html.push('<td style="text-align:center;">' + (r.k != null ? r.k : '\u2014') + '</td>');
@@ -842,6 +887,8 @@ function toggleDetail(idx) {
   td.innerHTML = renderDetailContent(r);
   panel.appendChild(td);
   row.after(panel);
+  td.setAttribute('tabindex', '-1');
+  setTimeout(function() { td.focus(); }, 50);
 }
 
 function handleRowKey(e, idx) {
@@ -908,7 +955,7 @@ function renderDetailContent(r) {
   if (r.orb) {
     h.push('<table class="compare-table">');
     h.push('<tr><td>ORB class</td><td>' + escapeHtml(r.orb.orb_class) + '</td></tr>');
-    h.push('<tr><td>ORB score</td><td>' + fmt(r.orb.orb_score, 1) + '</td></tr>');
+    h.push('<tr><td>ORB score</td><td>' + fmt(r.orb.orb_score, 1) + ' <span style="font-weight:400;color:var(--text-muted);font-size:0.75em;">(lower = less bias risk)</span></td></tr>');
     h.push('<tr><td>Excess significance</td><td>' + fmt(r.orb.excess_significance, 2) + '</td></tr>');
     h.push('<tr><td>Outlier ratio</td><td>' + fmt(r.orb.outlier_ratio, 2) + '</td></tr>');
     h.push('</table>');
@@ -925,6 +972,12 @@ function renderDetailContent(r) {
 /* ================================================================
    EXPORT FUNCTIONS
 ================================================================ */
+function csvSafe(val) {
+  var s = String(val == null ? '' : val);
+  if (/^[=+@\t\r]/.test(s)) s = "'" + s;
+  return s;
+}
+
 function exportCSV() {
   var headers = ['review_id','analysis_name','k','completeness','quality_score','quality_grade',
     'fragility_class','robustness_score','bias_class','n_detect',
@@ -932,19 +985,19 @@ function exportCSV() {
   var rows = [headers.join(',')];
   filtered.forEach(function(r) {
     rows.push([
-      r.review_id,
-      '"' + (r.analysis_name || '').replace(/"/g, '""') + '"',
+      csvSafe(r.review_id),
+      '"' + csvSafe((r.analysis_name || '').replace(/"/g, '""')) + '"',
       r.k != null ? r.k : '',
       r.completeness,
       r.quality_score != null ? r.quality_score : '',
-      r.quality_grade,
-      r.fragility ? r.fragility.classification : '',
+      csvSafe(r.quality_grade),
+      r.fragility ? csvSafe(r.fragility.classification) : '',
       r.fragility ? (r.fragility.robustness_score != null ? r.fragility.robustness_score : '') : '',
-      r.bias ? r.bias.bias_class : '',
+      r.bias ? csvSafe(r.bias.bias_class) : '',
       r.bias ? (r.bias.n_detect != null ? r.bias.n_detect : '') : '',
-      r.prediction ? r.prediction.discordance : '',
+      r.prediction ? csvSafe(r.prediction.discordance) : '',
       r.prediction ? (r.prediction.pi_ci_ratio != null ? r.prediction.pi_ci_ratio : '') : '',
-      r.orb ? r.orb.orb_class : '',
+      r.orb ? csvSafe(r.orb.orb_class) : '',
       r.orb ? (r.orb.orb_score != null ? r.orb.orb_score : '') : ''
     ].join(','));
   });
@@ -983,6 +1036,10 @@ function exportPNG() {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
+  };
+  img.onerror = function() {
+    URL.revokeObjectURL(url);
+    alert('PNG export failed \u2014 try SVG instead.');
   };
   img.src = url;
 }
