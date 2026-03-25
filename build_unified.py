@@ -1,12 +1,9 @@
-"""Merge all evidence quality audits into one unified dataset.
+"""Build unified evidence quality dataset from 4 source projects.
 
-Sources:
-1. Fragility Atlas: robustness score, classification, dimension attribution
-2. Bias Forensics: bias fingerprint, 8 methods, classification
-3. Prediction Gap: PI/CI discordance, false reassurance
-4. ORB Detector: outcome reporting bias risk score
-
-Output: unified CSV with one row per review (matched by review_id)
+LEFT JOIN from FragilityAtlas base (403 reviews).
+Missing components are null, not defaulted.
+Scoring re-weights available components.
+Output: data/reviews.json
 """
 
 import csv
@@ -15,136 +12,208 @@ from pathlib import Path
 
 
 def load_csv(path):
-    """Load CSV into dict keyed by review_id."""
+    """Load CSV into dict keyed by review_id. Returns {} if file missing."""
     data = {}
-    with open(path, encoding='utf-8') as f:
+    p = Path(path)
+    if not p.exists():
+        print(f"  WARNING: {path} not found, skipping")
+        return data
+    with open(p, encoding='utf-8') as f:
         for row in csv.DictReader(f):
             data[row['review_id']] = row
     return data
 
 
+def safe_float(val, default=None):
+    """Parse float, return default if empty/invalid."""
+    if val is None or val == '':
+        return default
+    try:
+        return float(val)
+    except (ValueError, TypeError):
+        return default
+
+
+def safe_int(val, default=None):
+    """Parse int, return default if empty/invalid."""
+    if val is None or val == '':
+        return default
+    try:
+        return int(float(val))
+    except (ValueError, TypeError):
+        return default
+
+
+def compute_score(fragility, bias, prediction, orb):
+    """Compute weighted quality score from available components.
+
+    Base weights: Fragility 35%, Bias 25%, Prediction 25%, ORB 15%.
+    Re-weights proportionally when a component is None.
+    Returns (score, grade) or (None, 'Insufficient') if <2 components.
+    """
+    components = []
+    weights = []
+
+    if fragility is not None:
+        components.append(fragility)
+        weights.append(0.35)
+    if bias is not None:
+        components.append(bias)
+        weights.append(0.25)
+    if prediction is not None:
+        components.append(prediction)
+        weights.append(0.25)
+    if orb is not None:
+        components.append(orb)
+        weights.append(0.15)
+
+    if len(components) < 2:
+        return None, 'Insufficient'
+
+    total_w = sum(weights)
+    score = sum(c * w / total_w for c, w in zip(components, weights))
+    score = round(score, 1)
+
+    if score >= 80:
+        grade = 'A'
+    elif score >= 60:
+        grade = 'B'
+    elif score >= 40:
+        grade = 'C'
+    else:
+        grade = 'D'
+
+    return score, grade
+
+
+BIAS_MAP = {'Clean': 100, 'Suspected': 60, 'Confirmed': 20, 'Discordant': 40}
+PRED_MAP = {'CONCORDANT_SIG': 100, 'CONCORDANT_NS': 60, 'FALSE_REASSURANCE': 20}
+
+
 def main():
-    # Load all 4 datasets
+    print("Loading source datasets...")
     fragility = load_csv(r'C:\FragilityAtlas\data\output\fragility_atlas_results.csv')
     bias = load_csv(r'C:\BiasForensics\data\output\bias_forensics_results.csv')
     prediction = load_csv(r'C:\PredictionGap\data\output\prediction_gap_results.csv')
     orb = load_csv(r'C:\OutcomeReportingBias\data\output\orb_results.csv')
 
-    # Find common review IDs
-    common = set(fragility.keys()) & set(prediction.keys())
-    print(f"Reviews in Fragility Atlas: {len(fragility)}")
-    print(f"Reviews in Bias Forensics: {len(bias)}")
-    print(f"Reviews in Prediction Gap: {len(prediction)}")
-    print(f"Reviews in ORB: {len(orb)}")
-    print(f"Common (Fragility + Prediction): {len(common)}")
+    print(f"  FragilityAtlas: {len(fragility)} reviews")
+    print(f"  BiasForensics:  {len(bias)} reviews")
+    print(f"  PredictionGap:  {len(prediction)} reviews")
+    print(f"  ORB:            {len(orb)} reviews")
 
-    # Build unified rows
-    unified = []
-    for rid in sorted(common):
-        f = fragility.get(rid, {})
-        b = bias.get(rid, {})
-        p = prediction.get(rid, {})
-        o = orb.get(rid, {})
+    # LEFT JOIN from FragilityAtlas base
+    reviews = []
+    for rid in sorted(fragility.keys()):
+        fa = fragility[rid]
+        bf = bias.get(rid)
+        pg = prediction.get(rid)
+        ob = orb.get(rid)
 
-        # Compute overall evidence quality score (0-100, higher = better)
-        # Components:
-        # 1. Robustness (from Fragility Atlas): 0-100 directly
-        robustness = float(f.get('robustness_score', 50))
+        # Count available sources
+        completeness = 1  # FA always present
+        if bf is not None:
+            completeness += 1
+        if pg is not None:
+            completeness += 1
+        if ob is not None:
+            completeness += 1
 
-        # 2. Bias freedom: 100 if Clean, 70 if Suspected, 30 if Confirmed, 50 if Discordant
-        bias_class = b.get('bias_class', 'Suspected')
-        bias_score = {'Clean': 100, 'Suspected': 60, 'Confirmed': 20, 'Discordant': 40}.get(bias_class, 50)
+        # Component scores (None if source missing)
+        frag_score = safe_float(fa.get('robustness_score'))
 
-        # 3. Prediction concordance: 100 if concordant sig, 50 if concordant NS, 20 if false reassurance
-        disc = p.get('discordance', 'CONCORDANT_NS')
-        pred_score = {'CONCORDANT_SIG': 100, 'CONCORDANT_NS': 60, 'FALSE_REASSURANCE': 20, 'HIDDEN_SIGNAL': 50}.get(disc, 50)
+        bias_score = None
+        if bf is not None:
+            bc = bf.get('bias_class', '')
+            bias_score = BIAS_MAP.get(bc)
 
-        # 4. ORB freedom: 100 if Low, 60 if Moderate, 20 if High
-        orb_class = o.get('orb_class', 'Low_Risk')
-        orb_score = {'Low_Risk': 100, 'Moderate_Risk': 60, 'High_Risk': 20}.get(orb_class, 50)
+        pred_score = None
+        if pg is not None:
+            disc = pg.get('discordance', '')
+            pred_score = PRED_MAP.get(disc)
 
-        # Overall: weighted average
-        overall = (robustness * 0.35 + bias_score * 0.25 + pred_score * 0.25 + orb_score * 0.15)
+        orb_raw = None
+        orb_score_val = None
+        if ob is not None:
+            orb_raw = safe_float(ob.get('orb_score'))
+            if orb_raw is not None:
+                orb_score_val = round(100 - orb_raw, 1)
 
-        # Grade
-        if overall >= 80:
-            grade = 'A'
-        elif overall >= 60:
-            grade = 'B'
-        elif overall >= 40:
-            grade = 'C'
-        else:
-            grade = 'D'
+        quality_score, quality_grade = compute_score(
+            frag_score, bias_score, pred_score, orb_score_val
+        )
 
-        unified.append({
+        # Build nested record
+        record = {
             'review_id': rid,
-            'analysis_name': f.get('analysis_name', p.get('analysis_name', '')),
-            'k': f.get('k', p.get('k', '')),
-            # Fragility
-            'robustness_score': robustness,
-            'fragility_class': f.get('classification', ''),
-            # Bias
-            'bias_class': bias_class,
-            'egger_sig': b.get('egger_sig', ''),
-            'n_detect': b.get('n_detect', ''),
-            # Prediction
-            'pi_ci_ratio': p.get('pi_ci_ratio', ''),
-            'discordance': disc,
-            # ORB
-            'orb_class': orb_class,
-            'orb_score_raw': o.get('orb_score', ''),
-            'excess_sig': o.get('excess_significance', ''),
-            # Overall
-            'quality_score': round(overall, 1),
-            'quality_grade': grade,
-        })
+            'analysis_name': fa.get('analysis_name', ''),
+            'k': safe_int(fa.get('k')),
+            'review_doi': fa.get('review_doi', ''),
+            'completeness': completeness,
+            'quality_score': quality_score,
+            'quality_grade': quality_grade,
+            'fragility': {
+                'robustness_score': frag_score,
+                'classification': fa.get('classification', ''),
+                'top_dimension': fa.get('top_dimension', ''),
+                'frac_significant': safe_float(fa.get('frac_significant')),
+                'frac_reversed': safe_float(fa.get('frac_reversed')),
+            },
+            'bias': {
+                'bias_class': bf.get('bias_class', ''),
+                'n_detect': safe_int(bf.get('n_detect')),
+                'egger_p': safe_float(bf.get('egger_p')),
+                'egger_sig': safe_int(bf.get('egger_sig')),
+                'tf_k0': safe_int(bf.get('tf_k0')),
+                'petpeese_theta': safe_float(bf.get('petpeese_theta')),
+                'petpeese_method': bf.get('petpeese_method', ''),
+            } if bf is not None else None,
+            'prediction': {
+                'discordance': pg.get('discordance', ''),
+                'pi_ci_ratio': safe_float(pg.get('pi_ci_ratio')),
+                'tau2': safe_float(pg.get('tau2')),
+                'I2': safe_float(pg.get('I2')),
+                'ci_lo': safe_float(pg.get('ci_lo')),
+                'ci_hi': safe_float(pg.get('ci_hi')),
+                'pi_lo': safe_float(pg.get('pi_lo')),
+                'pi_hi': safe_float(pg.get('pi_hi')),
+            } if pg is not None else None,
+            'orb': {
+                'orb_class': ob.get('orb_class', ''),
+                'orb_score': safe_float(ob.get('orb_score')),
+                'excess_significance': safe_float(ob.get('excess_significance')),
+                'outlier_ratio': safe_float(ob.get('outlier_ratio')),
+            } if ob is not None else None,
+        }
+        reviews.append(record)
 
-    # Export
-    out_path = Path(r'C:\EvidenceQuality\data\unified_quality.csv')
+    # Output JSON
+    out_path = Path(r'C:\EvidenceQuality\data\reviews.json')
     out_path.parent.mkdir(parents=True, exist_ok=True)
-    fields = list(unified[0].keys())
-    with open(out_path, 'w', newline='', encoding='utf-8') as f_out:
-        writer = csv.DictWriter(f_out, fieldnames=fields)
-        writer.writeheader()
-        for row in unified:
-            writer.writerow(row)
+    with open(out_path, 'w', encoding='utf-8') as f:
+        json.dump(reviews, f, indent=None)
 
     # Summary
-    n = len(unified)
-    grades = {g: sum(1 for r in unified if r['quality_grade'] == g) for g in 'ABCD'}
-    scores = [r['quality_score'] for r in unified]
+    n = len(reviews)
+    grades = {g: sum(1 for r in reviews if r['quality_grade'] == g) for g in ['A', 'B', 'C', 'D', 'Insufficient']}
+    scored = [r['quality_score'] for r in reviews if r['quality_score'] is not None]
+    comp4 = sum(1 for r in reviews if r['completeness'] == 4)
+    comp3 = sum(1 for r in reviews if r['completeness'] == 3)
 
-    summary = {
-        'n_reviews': n,
-        'grades': grades,
-        'mean_score': round(sum(scores) / n, 1),
-        'median_score': round(sorted(scores)[n // 2], 1),
-        'components': {
-            'fragility_fragile_or_unstable': sum(1 for r in unified if r['fragility_class'] in ('Fragile', 'Unstable')),
-            'bias_confirmed_or_discordant': sum(1 for r in unified if r['bias_class'] in ('Confirmed', 'Discordant')),
-            'prediction_false_reassurance': sum(1 for r in unified if r['discordance'] == 'FALSE_REASSURANCE'),
-            'orb_high_risk': sum(1 for r in unified if r['orb_class'] == 'High_Risk'),
-        },
-    }
-    with open(r'C:\EvidenceQuality\data\unified_summary.json', 'w', encoding='utf-8') as f_out:
-        json.dump(summary, f_out, indent=2)
-
-    print()
-    print("=" * 50)
+    print(f"\n{'='*50}")
     print("UNIFIED EVIDENCE QUALITY REPORT")
-    print("=" * 50)
+    print(f"{'='*50}")
     print(f"  {n} Cochrane reviews scored")
-    print(f"  Mean quality: {summary['mean_score']}/100")
-    print(f"  Median quality: {summary['median_score']}/100")
+    print(f"  Completeness: {comp4} with 4/4, {comp3} with 3/4")
+    if scored:
+        print(f"  Mean quality: {sum(scored)/len(scored):.1f}/100")
+        print(f"  Median quality: {sorted(scored)[len(scored)//2]:.1f}/100")
     print()
-    for g in 'ABCD':
-        pct = grades[g] / n * 100
-        print(f"  Grade {g}: {grades[g]:4d} ({pct:5.1f}%)")
-    print()
-    print(f"  Fragile/Unstable: {summary['components']['fragility_fragile_or_unstable']}")
-    print(f"  Bias Confirmed/Discordant: {summary['components']['bias_confirmed_or_discordant']}")
-    print(f"  Prediction False Reassurance: {summary['components']['prediction_false_reassurance']}")
-    print(f"  ORB High Risk: {summary['components']['orb_high_risk']}")
+    for g in ['A', 'B', 'C', 'D']:
+        c = grades.get(g, 0)
+        print(f"  Grade {g}: {c:4d} ({c/n*100:5.1f}%)")
+    print(f"\n  Output: {out_path}")
+    print(f"  JSON size: {out_path.stat().st_size / 1024:.0f} KB")
 
 
 if __name__ == '__main__':
