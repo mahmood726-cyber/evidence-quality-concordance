@@ -1,0 +1,96 @@
+{
+  "title": "The Cochrane Quality Concordance: Six Orthogonal Dimensions of Evidence Reliability",
+  "slug": "evidence-quality",
+  "author": "Mahmood Ahmad",
+  "date": "2026-03-26",
+  "body": "Are six dimensions of evidence quality in systematic reviews correlated or orthogonal when measured simultaneously across Cochrane meta-analyses? We profiled 403 Cochrane reviews from Pairwise70 across fragility, publication bias, prediction gap, outcome reporting bias, reproducibility, and study overlap. Spearman rank correlations and composite quality grades were computed across all fifteen pairwise dimension combinations, with significance assessed after Bonferroni correction. The median composite score was 69.2 (95% CI 67.5-70.9), with the strongest pairwise correlation being publication bias versus outcome reporting bias at rho equals 0.468, confirming non-redundancy. Only 43 reviews earned a top-tier quality grade, while 30.5% exhibited simultaneous fragility and publication bias, a double jeopardy pattern invisible to single-dimension assessment tools. Evidence quality in systematic reviews is multidimensional and largely orthogonal, meaning that passing one quality check provides little assurance about performance on others. Nonetheless, this framework is limited to six computationally derived dimensions and does not incorporate clinical domain expertise or individual patient-level outcome data.",
+  "word_count": 156,
+  "sentence_count": 7,
+  "sentences": [
+    {
+      "role": "Question",
+      "text": "Are six dimensions of evidence quality in systematic reviews correlated or orthogonal when measured simultaneously across Cochrane meta-analyses?"
+    },
+    {
+      "role": "Dataset",
+      "text": "We profiled 403 Cochrane reviews from Pairwise70 across fragility, publication bias, prediction gap, outcome reporting bias, reproducibility, and study overlap."
+    },
+    {
+      "role": "Method",
+      "text": "Spearman rank correlations and composite quality grades were computed across all fifteen pairwise dimension combinations, with significance assessed after Bonferroni correction."
+    },
+    {
+      "role": "Primary result",
+      "text": "The median composite score was 69.2 (95% CI 67.5-70.9), with the strongest pairwise correlation being publication bias versus outcome reporting bias at rho equals 0.468, confirming non-redundancy."
+    },
+    {
+      "role": "Robustness",
+      "text": "Only 43 reviews earned a top-tier quality grade, while 30.5% exhibited simultaneous fragility and publication bias, a double jeopardy pattern invisible to single-dimension assessment tools."
+    },
+    {
+      "role": "Interpretation",
+      "text": "Evidence quality in systematic reviews is multidimensional and largely orthogonal, meaning that passing one quality check provides little assurance about performance on others."
+    },
+    {
+      "role": "Boundary",
+      "text": "Nonetheless, this framework is limited to six computationally derived dimensions and does not incorporate clinical domain expertise or individual patient-level outcome data."
+    }
+  ],
+  "notes": {
+    "app": "EvidenceQuality v1.0",
+    "data": "Pairwise70 dataset (403 Cochrane reviews, 6 quality dimensions)",
+    "code": "https://github.com/mahmood726-cyber/evidence-quality-concordance",
+    "doi": "",
+    "version": "1.0",
+    "date": "2026-03-26",
+    "validation": "DRAFT"
+  },
+  "type": "methods",
+  "primary_estimand": "Mean absolute pairwise correlation",
+  "validation": {
+    "status": "pass",
+    "checks": [
+      {
+        "name": "single paragraph",
+        "ok": true,
+        "detail": "Body must not contain blank-line paragraph breaks."
+      },
+      {
+        "name": "sentence count",
+        "ok": true,
+        "detail": "Found 7 sentences."
+      },
+      {
+        "name": "word count",
+        "ok": true,
+        "detail": "Found 156 words."
+      },
+      {
+        "name": "no headings",
+        "ok": true,
+        "detail": "No markdown headings allowed in body."
+      },
+      {
+        "name": "no links",
+        "ok": true,
+        "detail": "No links or DOI links allowed in body."
+      },
+      {
+        "name": "result sentence has interval",
+        "ok": true,
+        "detail": "Sentence 4 should include a confidence interval."
+      },
+      {
+        "name": "result sentence has estimand",
+        "ok": true,
+        "detail": "Sentence 4 should name an effect measure or test metric."
+      },
+      {
+        "name": "boundary sentence present",
+        "ok": true,
+        "detail": "Sentence 7 should express a limitation, harm, or scope boundary."
+      }
+    ]
+  },
+  "schema": "e156-v0.2"
+}
