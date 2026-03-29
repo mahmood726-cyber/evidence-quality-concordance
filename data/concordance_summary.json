@@ -1,10 +1,10 @@
 {
   "n_reviews": 403,
   "grades": {
-    "B": 279,
-    "C": 77,
+    "B": 281,
+    "C": 76,
     "D": 3,
-    "A": 44
+    "A": 43
   },
   "mean_composite": 68.5,
   "median_composite": 69.2,
@@ -13,7 +13,7 @@
     "Pub Bias": 94.1,
     "Prediction Gap": 61.4,
     "ORB": 80.0,
-    "Reproducibility": 13.8,
+    "Reproducibility": 13.6,
     "Overlap": 95.5
   },
   "cross_dimension": {
@@ -26,37 +26,37 @@
     "Fragility vs Pub Bias": 0.303,
     "Fragility vs Prediction Gap": 0.161,
     "Fragility vs ORB": 0.191,
-    "Fragility vs Reproducibility": -0.021,
+    "Fragility vs Reproducibility": -0.027,
     "Fragility vs Overlap": 0.048,
     "Pub Bias vs Prediction Gap": 0.205,
     "Pub Bias vs ORB": 0.468,
-    "Pub Bias vs Reproducibility": 0.218,
+    "Pub Bias vs Reproducibility": 0.217,
     "Pub Bias vs Overlap": 0.291,
     "Prediction Gap vs ORB": 0.376,
-    "Prediction Gap vs Reproducibility": 0.029,
+    "Prediction Gap vs Reproducibility": 0.011,
     "Prediction Gap vs Overlap": 0.109,
-    "ORB vs Reproducibility": 0.054,
+    "ORB vs Reproducibility": 0.035,
     "ORB vs Overlap": 0.2,
-    "Reproducibility vs Overlap": -0.006
+    "Reproducibility vs Overlap": -0.004
   },
   "p_values": {
     "Fragility vs Pub Bias": 0.0,
     "Fragility vs Prediction Gap": 0.0012,
     "Fragility vs ORB": 0.0001,
-    "Fragility vs Reproducibility": 0.6767,
+    "Fragility vs Reproducibility": 0.5861,
     "Fragility vs Overlap": 0.3318,
     "Pub Bias vs Prediction Gap": 0.0,
     "Pub Bias vs ORB": 0.0,
     "Pub Bias vs Reproducibility": 0.0,
     "Pub Bias vs Overlap": 0.0,
     "Prediction Gap vs ORB": 0.0,
-    "Prediction Gap vs Reproducibility": 0.567,
+    "Prediction Gap vs Reproducibility": 0.8292,
     "Prediction Gap vs Overlap": 0.0292,
-    "ORB vs Reproducibility": 0.2757,
+    "ORB vs Reproducibility": 0.4839,
     "ORB vs Overlap": 0.0001,
-    "Reproducibility vs Overlap": 0.9071
+    "Reproducibility vs Overlap": 0.9283
   },
-  "mean_abs_rho": 0.179,
+  "mean_abs_rho": 0.176,
   "strongest_pair": "Pub Bias vs ORB",
   "weakest_pair": "Reproducibility vs Overlap"
 }

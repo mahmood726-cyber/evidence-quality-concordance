@@ -1,11 +1,404 @@
 review_id,analysis_name,k,robustness_score,fragility_class,bias_class,egger_sig,n_detect,pi_ci_ratio,discordance,orb_class,orb_score_raw,excess_sig,quality_score,quality_grade
-CD000028,Cause of cardiovascular mortality,21,66.67,Fragile,Confirmed,1,1,1.07,CONCORDANT_SIG,Low_Risk,10,-0.57,68.3,B
-CD000143,Extubation failure,12,87.55,Moderate,Suspected,0,0,3.17,CONCORDANT_NS,Moderate_Risk,40,1.9,69.6,B
-CD000219,Pain,21,49.06,Unstable,Suspected,0,0,2.82,FALSE_REASSURANCE,Moderate_Risk,35,1.94,46.2,C
-CD000478,Failure to maintain remission - all trials,13,69.05,Fragile,Suspected,0,0,1.12,CONCORDANT_SIG,Low_Risk,10,0.97,79.2,B
-CD000547,Individual adverse events,48,66.6,Fragile,Confirmed,1,2,5.39,FALSE_REASSURANCE,Moderate_Risk,25,-4.48,42.3,C
-CD001155,"Alendronate vs Other active agent, Secondary",59,93.81,Robust,Clean,0,0,4.61,CONCORDANT_NS,Moderate_Risk,40,5.2,81.8,A
-CD001321,Symptomatic UTI: culture-verified UTI,27,57.82,Fragile,Confirmed,1,2,3.91,FALSE_REASSURANCE,Moderate_Risk,35,0.08,39.2,D
-CD001396,Response rates,30,66.67,Fragile,Confirmed,1,2,3.08,CONCORDANT_SIG,Low_Risk,15,1.52,68.3,B
-CD001431,Participation in decision-making - all studies,61,93.78,Robust,Suspected,0,0,5.01,CONCORDANT_NS,High_Risk,65,10.86,65.8,B
-CD001533,Adverse events,21,81.67,Moderate,Suspected,0,0,1.91,CONCORDANT_NS,High_Risk,50,2.02,61.6,B
+CD000028,Cause of cardiovascular mortality,21,66.67,Fragile,Confirmed,1,1,1.07,CONCORDANT_SIG,Low_Risk,10.0,-0.57,66.8,B
+CD000143,Extubation failure,12,87.55,Moderate,Suspected,0,0,3.17,CONCORDANT_NS,Moderate_Risk,40.0,1.9,69.6,B
+CD000219,Pain,21,49.06,Unstable,Suspected,0,0,2.82,FALSE_REASSURANCE,Moderate_Risk,35.0,1.94,46.9,C
+CD000478,Failure to maintain remission - all trials,13,69.05,Fragile,Suspected,0,0,1.12,CONCORDANT_SIG,Low_Risk,10.0,0.97,77.7,B
+CD000547,Individual adverse events,48,66.6,Fragile,Confirmed,1,2,5.39,FALSE_REASSURANCE,Moderate_Risk,25.0,-4.48,44.6,C
+CD001155,"Alendronate vs Other active agent, Secondary",59,93.81,Robust,Clean,0,0,4.61,CONCORDANT_NS,Moderate_Risk,40.0,5.2,81.8,A
+CD001321,Symptomatic UTI: culture-verified UTI,27,57.82,Fragile,Confirmed,1,2,3.91,FALSE_REASSURANCE,Moderate_Risk,35.0,0.08,40.0,C
+CD001396,Response rates,30,66.67,Fragile,Confirmed,1,2,3.08,CONCORDANT_SIG,Low_Risk,15.0,1.52,66.1,B
+CD001431,Participation in decision-making - all studies,61,93.78,Robust,Suspected,0,0,5.01,CONCORDANT_NS,High_Risk,65.0,10.86,68.1,B
+CD001533,Adverse events,21,81.67,Moderate,Suspected,0,0,1.91,CONCORDANT_NS,High_Risk,50.0,2.02,66.1,B
+CD001552,Clinical improvement at long-term follow-up: over 3 months,3,17.46,Unstable,,,,11.62,FALSE_REASSURANCE,High_Risk,55.0,1.04,23.8,D
+CD001703,Non-specific low back pain and spine-related leg pain: withdrawals due to adverse events,21,68.18,Fragile,Suspected,0,0,1.07,CONCORDANT_SIG,Low_Risk,0.0,-0.64,78.9,B
+CD001797,Significant improvement in disability within 6 weeks,5,66.67,Fragile,Clean,0,0,1.62,CONCORDANT_SIG,Moderate_Risk,25.0,1.02,84.6,A
+CD001837,Quit at longest follow-up (6 + months),49,66.67,Fragile,Confirmed,1,2,4.57,FALSE_REASSURANCE,Moderate_Risk,25.0,1.5,44.6,C
+CD001909,≥ 50% reduction in seizure frequency (intention-to-treat analysis),25,100.0,Robust,Suspected,1,1,1.06,CONCORDANT_SIG,Low_Risk,10.0,-1.68,88.5,A
+CD001920,Functional task training compared to other approaches: Adverse events,4,93.33,Robust,,,,2.2,CONCORDANT_NS,Low_Risk,10.0,-0.31,81.6,A
+CD002042,Participants exposed to blood transfusion by clinical specialties,53,100.0,Robust,Suspected,1,2,6.92,FALSE_REASSURANCE,High_Risk,50.0,-3.92,62.5,B
+CD002052,All‐cause mortality until hospital discharge,3,91.67,Robust,,,,6.48,CONCORDANT_NS,Low_Risk,0.0,-0.17,82.8,A
+CD002112,Number of children achieving 14 consecutive dry nights by the end of treatment,21,66.67,Fragile,Confirmed,1,2,3.0,FALSE_REASSURANCE,High_Risk,50.0,2.14,40.8,C
+CD002115,Number of participants with self-reported improvement in constipation (dichotomous),5,39.95,Unstable,Confirmed,1,3,3.32,FALSE_REASSURANCE,Moderate_Risk,40.0,1.78,33.0,D
+CD002122,Adverse effects,56,48.54,Unstable,Discordant,0,0,5.41,CONCORDANT_NS,High_Risk,90.0,12.87,43.5,C
+CD002203,Adverse effects of antibiotic treatment,50,28.23,Unstable,Confirmed,1,2,4.37,CONCORDANT_NS,Moderate_Risk,40.0,4.52,38.9,D
+CD002243,28-day all-cause mortality - sensitivity analysis based on methodological quality,180,49.5,Unstable,Confirmed,1,2,5.73,FALSE_REASSURANCE,High_Risk,50.0,4.23,34.8,D
+CD002290,Relapse,16,63.4,Fragile,Confirmed,1,2,3.79,FALSE_REASSURANCE,Moderate_Risk,40.0,0.12,41.2,C
+CD002303,Reulceration,5,64.29,Fragile,Clean,0,0,3.05,FALSE_REASSURANCE,Moderate_Risk,25.0,-0.5,63.8,B
+CD002971,Necrotising enterocolitis,10,60.03,Fragile,Suspected,0,0,1.35,CONCORDANT_SIG,Low_Risk,0.0,0.37,76.0,B
+CD003129,Treatment response,3,22.22,Unstable,,,,6.48,FALSE_REASSURANCE,Low_Risk,0.0,-0.28,37.0,D
+CD003216,Incidence of pressure ulcers,4,71.11,Moderate,,,,2.48,CONCORDANT_NS,Low_Risk,10.0,-0.45,71.2,B
+CD003218,Proportion of participants with at least 1 adverse event,5,66.67,Fragile,Confirmed,1,2,1.62,CONCORDANT_NS,Low_Risk,0.0,-0.4,58.3,C
+CD003331,All-cause mortality up to 12 months' follow-up,35,67.59,Fragile,Discordant,0,0,1.04,CONCORDANT_NS,Low_Risk,10.0,-1.06,62.2,B
+CD003333,All-cause mortality,4,66.67,Fragile,,,,2.2,CONCORDANT_NS,Low_Risk,10.0,-0.11,69.1,B
+CD003357,Live birth rate per woman,7,44.84,Unstable,Suspected,0,0,3.04,FALSE_REASSURANCE,Low_Risk,15.0,-0.83,48.4,C
+CD003376,"Treatment versus reference, secondary",15,91.67,Robust,Suspected,0,0,1.1,CONCORDANT_NS,Low_Risk,0.0,0.25,77.1,B
+CD003414,Clinical pregnancy rate per woman,16,61.06,Fragile,Discordant,0,0,1.09,CONCORDANT_NS,Low_Risk,15.0,1.32,59.1,C
+CD003429,Adverse events,6,65.08,Fragile,Confirmed,1,1,1.42,CONCORDANT_NS,Low_Risk,0.0,-0.5,57.8,C
+CD003477,Behaviour problems: agitation or aggression,11,69.44,Fragile,Discordant,0,0,2.42,CONCORDANT_NS,Low_Risk,0.0,-0.39,64.3,B
+CD003511,Miscarriage (all trials),8,92.95,Robust,Suspected,0,0,1.25,CONCORDANT_NS,Low_Risk,10.0,0.56,76.0,B
+CD003519,Breastfeeding 1 month to 4 months post birth,15,52.08,Fragile,Confirmed,1,2,2.51,FALSE_REASSURANCE,Moderate_Risk,35.0,1.57,38.0,D
+CD003594,Adverse events,11,87.17,Moderate,Clean,0,0,2.69,CONCORDANT_NS,Low_Risk,0.0,0.77,85.5,A
+CD003598,Graft loss,21,79.29,Moderate,Clean,0,0,1.07,CONCORDANT_SIG,Low_Risk,20.0,-1.74,89.8,A
+CD003743,Infection up to discharge from home support or hospital,6,84.13,Moderate,Clean,0,0,1.42,CONCORDANT_SIG,Low_Risk,0.0,-0.77,94.4,A
+CD003774,CMV disease,42,100.0,Robust,Suspected,1,2,1.03,CONCORDANT_SIG,Low_Risk,10.0,0.21,88.5,A
+CD003833,Vascular events,4,93.33,Robust,,,,2.2,CONCORDANT_NS,Low_Risk,0.0,-0.19,83.6,A
+CD003962,Adverse events,6,85.71,Moderate,Confirmed,1,1,1.42,CONCORDANT_NS,Low_Risk,10.0,-0.45,63.5,B
+CD004184,Overall adverse events,7,76.19,Moderate,Discordant,0,0,2.2,CONCORDANT_NS,Moderate_Risk,30.0,0.49,62.2,B
+CD004307,Smoking cessation (subgrouped by when incentives were provided),42,100.0,Robust,Clean,0,0,2.93,CONCORDANT_SIG,Moderate_Risk,35.0,1.53,94.8,A
+CD004376,Study withdrawals at final follow-up,104,100.0,Robust,Confirmed,0,1,1.01,CONCORDANT_NS,Low_Risk,10.0,-0.9,68.5,B
+CD004406,Resolution of symptoms post-treatment (ITT analysis),6,85.71,Moderate,Confirmed,1,2,1.42,CONCORDANT_NS,Low_Risk,0.0,-0.39,65.0,B
+CD004417,Antibiotic use: delayed versus immediate antibiotics,17,96.3,Robust,Suspected,1,2,4.05,CONCORDANT_SIG,Moderate_Risk,30.0,0.75,84.2,A
+CD004508,"Nausea or vomiting, or both (random-effects model)",6,51.7,Fragile,Discordant,0,0,3.07,CONCORDANT_NS,Low_Risk,15.0,0.73,55.8,C
+CD004661,Neonatal death,12,87.55,Moderate,Clean,0,0,1.14,CONCORDANT_NS,Low_Risk,10.0,-0.43,84.1,A
+CD004667,Caesarean birth,16,34.08,Unstable,Suspected,0,0,2.37,FALSE_REASSURANCE,Moderate_Risk,25.0,1.49,43.2,C
+CD004703,Serious adverse events,4,86.67,Moderate,,,,2.2,CONCORDANT_NS,Low_Risk,0.0,-0.23,80.4,A
+CD004736,Maternal anaemia at term (Hb less than 110 g/L at 37 weeks' gestation or more) (ALL),14,66.24,Fragile,Confirmed,1,2,3.26,FALSE_REASSURANCE,High_Risk,65.0,1.91,38.4,D
+CD004762,Relaxation time (seconds),5,26.98,Unstable,Confirmed,1,2,3.17,FALSE_REASSURANCE,High_Risk,75.0,1.93,23.2,D
+CD004871,Pain (dichotomous data; short-term): subgroup analysis by dosage,5,26.46,Unstable,Confirmed,1,2,3.34,FALSE_REASSURANCE,Low_Risk,15.0,-0.96,32.0,D
+CD004904,Postpartum endometritis,4,64.76,Fragile,,,,2.2,CONCORDANT_NS,Low_Risk,0.0,-0.1,70.2,B
+CD004925,Urine leak and obstruction,31,66.67,Fragile,Confirmed,1,1,1.04,CONCORDANT_SIG,Low_Risk,0.0,0.39,68.3,B
+CD004953,Death,11,18.25,Unstable,Clean,0,0,2.3,CONCORDANT_NS,Low_Risk,20.0,-0.28,58.4,C
+CD004992,Recurrence of pelvic pain,4,65.4,Fragile,,,,2.57,CONCORDANT_SIG,Low_Risk,0.0,0.94,83.9,A
+CD005133,Adverse events,39,10.99,Unstable,Suspected,0,0,1.94,FALSE_REASSURANCE,Low_Risk,20.0,0.96,35.8,D
+CD005187,Death from any cause,5,66.67,Fragile,Suspected,0,0,2.23,CONCORDANT_SIG,Low_Risk,0.0,0.73,78.3,B
+CD005343,Surgically-related adverse effects (G3+),31,66.67,Fragile,Confirmed,1,1,3.19,FALSE_REASSURANCE,High_Risk,65.0,2.56,38.6,D
+CD005495,Rate of cerebral palsy,9,64.29,Fragile,Confirmed,0,1,1.21,CONCORDANT_NS,Low_Risk,0.0,-0.35,57.5,C
+CD005566,Infectious complications,28,90.42,Robust,Clean,0,0,1.05,CONCORDANT_SIG,Low_Risk,20.0,-1.48,93.6,A
+CD005582,Serious adverse events,4,100.0,Robust,,,,2.2,CONCORDANT_NS,Low_Risk,0.0,-0.24,86.7,A
+CD005595,Adverse events,32,100.0,Robust,Suspected,0,0,1.04,CONCORDANT_NS,Low_Risk,10.0,-0.32,78.5,B
+CD005951,Death from any cause by day 90,7,79.96,Moderate,Suspected,0,0,2.29,CONCORDANT_NS,Moderate_Risk,25.0,1.05,69.2,B
+CD006023,Hypercalcaemia,18,71.93,Moderate,Confirmed,0,1,3.06,CONCORDANT_SIG,Low_Risk,10.0,-1.93,68.7,B
+CD006027,Need for rescue medication,4,36.19,Unstable,,,,4.15,FALSE_REASSURANCE,Low_Risk,15.0,0.83,40.6,C
+CD006124,Perioperative complications,6,76.19,Moderate,Suspected,0,0,3.35,CONCORDANT_NS,High_Risk,60.0,2.83,62.7,B
+CD006140,Acceptability,8,39.68,Unstable,Confirmed,1,1,2.93,FALSE_REASSURANCE,High_Risk,60.0,0.61,29.9,D
+CD006182,Subsequent laparotomy during initial hospitalisation,4,60.32,Fragile,,,,2.2,CONCORDANT_SIG,Low_Risk,0.0,0.61,81.5,A
+CD006185,Regaining independent walking ability,78,70.46,Moderate,Clean,0,1,4.65,FALSE_REASSURANCE,Low_Risk,0.0,-0.2,69.7,B
+CD006257,Death: any cause,9,89.05,Moderate,Suspected,0,0,1.93,CONCORDANT_NS,Low_Risk,20.0,-0.56,73.2,B
+CD006404,Other adverse events,112,65.05,Fragile,Confirmed,1,1,4.8,CONCORDANT_NS,High_Risk,50.0,5.59,50.3,C
+CD006475,Sensitivity analysis: eczema by 2 years by definition of allergic disease,27,60.09,Fragile,Suspected,0,0,2.98,FALSE_REASSURANCE,High_Risk,50.0,2.48,48.5,C
+CD006515,Mechanical complications,5,72.22,Moderate,Discordant,0,0,1.62,CONCORDANT_NS,Low_Risk,0.0,-0.21,65.3,B
+CD006536,All-cause mortality,43,98.48,Robust,Suspected,0,0,1.03,CONCORDANT_NS,Low_Risk,0.0,-0.48,79.5,B
+CD006606,"Clinical pregnancy – all studies (odds ratio, random-effects)",4,64.44,Fragile,,,,4.39,CONCORDANT_NS,Moderate_Risk,40.0,0.9,62.1,B
+CD006632,Length of hospital stay (days),23,76.39,Moderate,Confirmed,1,1,3.29,FALSE_REASSURANCE,High_Risk,75.0,5.13,40.5,C
+CD006689,Maternal peripheral parasitaemia at delivery (amplification techniques),5,16.14,Unstable,Suspected,0,0,1.62,FALSE_REASSURANCE,Low_Risk,0.0,0.21,40.6,C
+CD006712,Pain with aspiration,3,72.22,Moderate,,,,6.48,CONCORDANT_NS,Low_Risk,0.0,-0.37,73.7,B
+CD006714,Abortion completed with intended method (defined as fetal expulsion),3,66.67,Fragile,,,,6.48,CONCORDANT_NS,Low_Risk,20.0,-0.08,67.1,B
+CD006742,All-Cause Mortality,4,86.67,Moderate,,,,2.2,CONCORDANT_NS,Low_Risk,10.0,-0.31,78.4,B
+CD006839,Proportion of participants with clinical improvement in function compared to baseline,3,100.0,Robust,,,,6.48,CONCORDANT_NS,Low_Risk,0.0,-0.21,86.7,A
+CD006913,"Number of patients completing program - psychotherapy vs any control, all populations",29,30.85,Unstable,Confirmed,1,2,3.99,FALSE_REASSURANCE,Moderate_Risk,35.0,-1.1,30.5,D
+CD006919,Clinical pregnancies all studies,19,62.38,Fragile,Discordant,0,0,2.58,FALSE_REASSURANCE,Low_Risk,0.0,-0.02,51.8,C
+CD006942,Live birth or ongoing pregnancy rate per couple,4,27.62,Unstable,,,,4.19,CONCORDANT_NS,Low_Risk,15.0,-0.17,49.9,C
+CD006982,Retinopathy of prematurity (stage ≥ 3),4,69.52,Fragile,,,,3.6,CONCORDANT_NS,Low_Risk,0.0,-0.13,72.4,B
+CD007024,Individual adverse events,18,91.23,Robust,Suspected,0,0,1.08,CONCORDANT_NS,Low_Risk,20.0,-0.1,73.9,B
+CD007026,All-cause death,7,87.5,Moderate,Suspected,0,0,1.31,CONCORDANT_NS,Low_Risk,10.0,-0.22,74.1,B
+CD007079,Preterm birth < 37 weeks' gestation,10,7.65,Unstable,Confirmed,1,2,2.54,FALSE_REASSURANCE,Moderate_Risk,35.0,0.58,22.4,D
+CD007130,Completers,26,58.32,Fragile,Discordant,0,0,3.23,CONCORDANT_NS,Moderate_Risk,30.0,0.76,55.9,C
+CD007156,Difficulty in swallowing,3,36.11,Unstable,,,,6.48,FALSE_REASSURANCE,Low_Risk,0.0,0.48,43.5,C
+CD007310,Complications,7,95.83,Robust,Clean,0,0,1.31,CONCORDANT_NS,Low_Risk,0.0,-0.3,88.5,A
+CD007374,Death,6,95.24,Robust,Suspected,0,0,1.42,CONCORDANT_NS,Low_Risk,0.0,-0.23,78.3,B
+CD007491,Readmission to hospital after discharge from hospital at home or inpatient care (3 to 12 months' follow-up),8,83.95,Moderate,Suspected,0,0,2.45,CONCORDANT_NS,Low_Risk,20.0,0.69,71.4,B
+CD007569,Return to work,6,79.37,Moderate,Suspected,0,0,1.9,CONCORDANT_NS,Low_Risk,10.0,-0.54,71.3,B
+CD007572,Failure to induce clinical remission (6 to 12 weeks),10,66.67,Fragile,Confirmed,1,2,3.04,FALSE_REASSURANCE,Low_Risk,15.0,0.2,46.1,C
+CD007639,Adverse events,5,34.92,Unstable,Discordant,0,0,3.3,CONCORDANT_NS,Moderate_Risk,30.0,1.84,47.7,C
+CD007674,Clinical recovery or improvement - best and worst case scenario,28,55.17,Fragile,Confirmed,1,3,4.61,FALSE_REASSURANCE,High_Risk,80.0,4.36,32.3,D
+CD007784,Major cardiovascular events,13,100.0,Robust,Suspected,1,1,2.39,CONCORDANT_SIG,High_Risk,50.0,3.49,82.5,A
+CD007809,Number of participants reporting an adverse event,3,91.67,Robust,,,,6.48,CONCORDANT_NS,Low_Risk,0.0,-0.24,82.8,A
+CD007859,Pain (analgesic consumption),3,91.67,Robust,,,,10.13,CONCORDANT_NS,Low_Risk,0.0,-0.28,82.8,A
+CD007872,Estimated blood loss ≥ 500 mL,3,91.67,Robust,,,,8.77,CONCORDANT_NS,Low_Risk,0.0,-0.4,82.8,A
+CD007895,Withdrawals due to adverse effects,3,75.0,Moderate,,,,6.48,CONCORDANT_NS,Low_Risk,0.0,-0.11,75.0,B
+CD007896,Withdrawals due to adverse effects,35,67.59,Fragile,Confirmed,1,1,1.04,CONCORDANT_SIG,Low_Risk,0.0,0.77,68.7,B
+CD008063,Extent of substance use,50,66.67,Fragile,Confirmed,1,2,4.14,FALSE_REASSURANCE,Low_Risk,10.0,-0.57,46.8,C
+CD008145,Reception of DTP3 by 1 year of age,6,48.53,Unstable,Confirmed,1,3,3.39,FALSE_REASSURANCE,High_Risk,65.0,1.03,32.2,D
+CD008165,Proportion of patients with one or more potentially inappropriate medication,13,25.62,Unstable,Suspected,0,0,3.53,FALSE_REASSURANCE,High_Risk,65.0,1.34,34.2,D
+CD008176,Death (any cause),38,65.81,Fragile,Confirmed,1,1,1.03,CONCORDANT_NS,Low_Risk,20.0,-1.14,55.0,C
+CD008237,Independent procedure completion: type of endoscopic procedure under study,6,62.59,Fragile,Confirmed,0,1,2.71,FALSE_REASSURANCE,High_Risk,50.0,1.52,39.4,D
+CD008309,Mechanical ventilation at any time,4,20.95,Unstable,,,,3.18,FALSE_REASSURANCE,Low_Risk,0.0,-0.32,36.4,D
+CD008349,Upper limb function post intervention (composite measure),68,47.85,Unstable,Confirmed,0,1,6.63,FALSE_REASSURANCE,High_Risk,65.0,8.08,32.0,D
+CD008469,Exacerbations leading to emergency department (ED) visits: subgrouped by time frame of follow-up,11,69.44,Fragile,Suspected,0,0,1.15,CONCORDANT_NS,Low_Risk,0.0,-0.28,69.3,B
+CD008493,Atrial fibrillation,10,65.37,Fragile,Confirmed,0,1,2.67,CONCORDANT_NS,High_Risk,50.0,1.03,50.4,C
+CD008552,Vegetable intake,5,69.58,Fragile,Confirmed,1,2,3.1,CONCORDANT_NS,Moderate_Risk,25.0,0.47,55.6,C
+CD008564,Total mortality,12,59.71,Fragile,Confirmed,1,1,1.19,CONCORDANT_NS,Low_Risk,0.0,0.35,55.9,C
+CD008628,"Function in the long term; number of people with scores of excellent, good, or satisfactory/fair",9,70.0,Moderate,Discordant,0,0,1.21,CONCORDANT_NS,Low_Risk,0.0,-0.43,64.5,B
+CD008688,Pancreatic fistula (free definition),3,91.67,Robust,,,,6.48,CONCORDANT_NS,Low_Risk,10.0,-0.13,80.8,A
+CD008709,Urinary retention,31,62.15,Fragile,Suspected,0,0,1.04,CONCORDANT_SIG,Low_Risk,0.0,-1.77,76.8,B
+CD008858,Participants with adverse events,63,100.0,Robust,Confirmed,0,1,6.13,FALSE_REASSURANCE,High_Risk,50.0,-2.91,52.5,C
+CD008879,Non-infectious complications,8,24.34,Unstable,Suspected,0,0,1.25,FALSE_REASSURANCE,Low_Risk,10.0,0.19,42.0,C
+CD008940,Participants experiencing severe adverse events,4,33.33,Unstable,,,,2.2,CONCORDANT_NS,Low_Risk,0.0,-0.1,55.6,C
+CD009022,Conversion to laparoscopic (use of more than one additional port)/open surgery (rate),9,57.78,Fragile,Clean,0,0,1.21,CONCORDANT_SIG,Low_Risk,0.0,-0.32,85.2,A
+CD009102,Intubation and mechanical ventilation in DR,5,77.78,Moderate,Clean,0,0,2.92,CONCORDANT_NS,Moderate_Risk,35.0,-0.41,77.0,B
+CD009235,Mortality,31,66.67,Fragile,Confirmed,0,1,1.04,CONCORDANT_NS,Low_Risk,20.0,-1.09,55.3,C
+CD009252,Subjective symptom of cure or improvement,14,92.7,Robust,Suspected,0,0,2.65,CONCORDANT_NS,Moderate_Risk,40.0,2.24,71.4,B
+CD009298,Operative delivery (Subgroup analysis: nulliparous versus multiparous),11,100.0,Robust,Suspected,0,0,1.67,CONCORDANT_NS,Low_Risk,10.0,0.46,78.5,B
+CD009362,Pressure ulcer stage,27,100.0,Robust,Clean,0,0,1.8,CONCORDANT_SIG,Low_Risk,0.0,-1.26,100.0,A
+CD009417,Adverse events of any severity or seriousness,5,29.37,Unstable,Confirmed,1,1,2.68,CONCORDANT_NS,Low_Risk,10.0,-0.44,43.8,C
+CD009508,Subjective cure/improvement,10,18.9,Unstable,Confirmed,0,1,2.79,FALSE_REASSURANCE,High_Risk,55.0,2.36,23.4,D
+CD009531,Attrition/leaving the study early,8,66.67,Fragile,Confirmed,1,2,1.25,CONCORDANT_NS,Low_Risk,0.0,-0.6,58.3,C
+CD009535,All-cause death,9,46.03,Unstable,Confirmed,0,1,3.2,FALSE_REASSURANCE,High_Risk,65.0,1.52,31.4,D
+CD009609,Need for treatment escalation,8,55.38,Fragile,Clean,0,0,2.4,FALSE_REASSURANCE,Moderate_Risk,30.0,0.16,59.9,C
+CD009679,Complications,24,89.27,Moderate,Suspected,0,0,3.2,CONCORDANT_NS,Moderate_Risk,25.0,0.35,72.5,B
+CD009730,Adverse effects,10,45.45,Unstable,Discordant,0,0,1.6,CONCORDANT_NS,Low_Risk,0.0,-0.27,55.9,C
+CD009749,Sensitivity analyses ,25,100.0,Robust,Suspected,0,0,1.06,CONCORDANT_NS,Low_Risk,10.0,0.21,78.5,B
+CD009788,Leaving the study early,5,20.9,Unstable,Suspected,0,0,1.97,FALSE_REASSURANCE,Low_Risk,10.0,-0.13,40.8,C
+CD009945,50% responder,3,22.22,Unstable,,,,6.48,FALSE_REASSURANCE,Low_Risk,0.0,-0.74,37.0,D
+CD010001,Clinical pregnancy,25,66.67,Fragile,Suspected,0,0,2.54,FALSE_REASSURANCE,Moderate_Risk,25.0,1.99,54.6,C
+CD010145,(Additional table) CR until progression of the disease,9,73.33,Moderate,Confirmed,1,1,1.21,CONCORDANT_SIG,Low_Risk,0.0,-1.6,70.7,B
+CD010189,Overall survival,6,62.59,Fragile,Discordant,0,0,2.41,CONCORDANT_NS,Low_Risk,0.0,0.59,61.9,B
+CD010216,Serious adverse events,7,87.5,Moderate,Suspected,0,0,1.31,CONCORDANT_NS,Low_Risk,10.0,-0.25,74.1,B
+CD010290,Incidence of OHSS per woman by urinary gonadotropins,7,93.06,Robust,Suspected,0,0,1.31,CONCORDANT_NS,Low_Risk,0.0,-0.45,77.6,B
+CD010441,Incidence of perineal trauma (tears or episiotomy or both),3,91.67,Robust,,,,6.48,CONCORDANT_NS,Low_Risk,0.0,-0.36,82.8,A
+CD010533,Treatment-related mortality,3,22.22,Unstable,,,,6.48,FALSE_REASSURANCE,Low_Risk,0.0,-0.86,37.0,D
+CD010583,Intra-abdominal infection,3,72.62,Moderate,,,,10.79,CONCORDANT_NS,Low_Risk,15.0,0.37,70.9,B
+CD010779,Passive range of motion with standardised force ,5,77.78,Moderate,Suspected,0,0,2.35,CONCORDANT_NS,Low_Risk,0.0,-0.19,72.2,B
+CD010856,"Sensitivity analysis - all included studies: change in the number of decayed, missing or filled permanent teeth (DMFT)",12,68.99,Fragile,Confirmed,0,1,3.92,FALSE_REASSURANCE,High_Risk,50.0,-2.0,41.6,C
+CD010966,Most common adverse events (occurring in at least 10% of participants in either group),67,100.0,Robust,Suspected,0,1,1.02,CONCORDANT_SIG,Low_Risk,10.0,-2.27,88.5,A
+CD011039,Morbidity (by type),5,67.99,Fragile,Discordant,0,0,3.33,CONCORDANT_NS,Moderate_Risk,40.0,0.99,57.8,C
+CD011044,Response rates,26,100.0,Robust,Clean,0,0,3.19,FALSE_REASSURANCE,Low_Risk,10.0,-0.06,78.5,B
+CD011120,Tobacco use cessation,9,92.38,Robust,Suspected,0,0,1.21,CONCORDANT_NS,Low_Risk,10.0,0.6,75.8,B
+CD011197,Serious adverse events,6,90.48,Robust,Suspected,0,0,1.42,CONCORDANT_NS,Low_Risk,0.0,-0.27,76.7,B
+CD011204,Proportion of all-cause discontinuations at 6 months,13,65.08,Fragile,Discordant,0,0,3.39,FALSE_REASSURANCE,Moderate_Risk,25.0,-1.74,49.0,C
+CD011305,All-cause mortality at 31 to 100 days,3,41.67,Unstable,,,,6.63,CONCORDANT_NS,Low_Risk,0.0,-0.08,59.4,C
+CD011330,Withdrawal due to adverse events,4,62.22,Fragile,,,,2.2,CONCORDANT_NS,Low_Risk,0.0,-0.56,69.0,B
+CD011381,Number of patients who discontinued treatment due to adverse effects,46,15.47,Unstable,Discordant,0,0,5.26,FALSE_REASSURANCE,High_Risk,65.0,8.08,25.7,D
+CD011535,Anti-IL17 versus placebo,38,100.0,Robust,Suspected,1,3,3.3,CONCORDANT_SIG,Moderate_Risk,30.0,3.61,85.5,A
+CD011575,All-cause mortality,4,74.92,Moderate,,,,4.32,CONCORDANT_NS,Low_Risk,15.0,0.63,72.0,B
+CD011600,Pneumonia,5,70.37,Moderate,Clean,0,0,1.62,CONCORDANT_SIG,Low_Risk,0.0,-0.56,89.6,A
+CD011626,Adverse events,11,62.17,Fragile,Discordant,0,0,2.19,CONCORDANT_NS,Low_Risk,0.0,-0.19,61.8,B
+CD011627,Number of participants with incontinence-associated dermatitis,8,86.77,Moderate,Suspected,0,0,3.03,CONCORDANT_NS,Moderate_Risk,45.0,2.1,68.6,B
+CD011670,Wound infection,7,71.63,Moderate,Confirmed,0,1,2.57,CONCORDANT_NS,Low_Risk,0.0,-0.19,60.1,B
+CD011671,Delayed graft function: type of donor,17,64.55,Fragile,Clean,0,0,2.43,FALSE_REASSURANCE,Low_Risk,15.0,1.85,65.3,B
+CD011689,Shivering,31,100.0,Robust,Suspected,0,2,4.52,CONCORDANT_SIG,High_Risk,75.0,1.24,78.8,B
+CD011762,Major bleeding,29,97.14,Robust,Suspected,0,0,1.99,CONCORDANT_NS,Low_Risk,10.0,-0.82,77.5,B
+CD011778,PPD (change from baseline (mm)); 3 months,38,64.35,Fragile,Confirmed,1,2,5.98,FALSE_REASSURANCE,High_Risk,50.0,-5.57,40.0,C
+CD011793,Re-exploration,13,61.9,Fragile,Confirmed,0,1,1.12,CONCORDANT_NS,Low_Risk,0.0,-0.43,56.7,C
+CD011841,Recurrence of central serous chorioretinopathy at 12 months (± 6),4,71.43,Moderate,,,,2.64,CONCORDANT_NS,Low_Risk,0.0,-0.19,73.3,B
+CD011851,Fatal cardiovascular events,4,73.33,Moderate,,,,2.2,CONCORDANT_NS,Low_Risk,10.0,-0.19,72.2,B
+CD011858,Extracorporeal circuit thrombosis,3,100.0,Robust,,,,7.21,CONCORDANT_NS,Low_Risk,0.0,-0.19,86.7,A
+CD011866,Dropouts,28,100.0,Robust,Clean,0,0,2.7,FALSE_REASSURANCE,Low_Risk,20.0,-0.16,77.0,B
+CD011885,"Clinically relevant response, as defined by study authors",7,79.56,Moderate,Suspected,0,0,2.4,CONCORDANT_NS,Moderate_Risk,25.0,1.4,69.1,B
+CD012067,Adverse events,38,63.25,Fragile,Confirmed,0,1,5.64,FALSE_REASSURANCE,High_Risk,60.0,-3.09,38.1,D
+CD012079,Repeat surgery (0.5 to 7 years) including trials at high risk of bias,52,20.01,Unstable,Confirmed,1,1,4.7,FALSE_REASSURANCE,Moderate_Risk,30.0,2.15,27.5,D
+CD012170,Weight,8,34.22,Unstable,Suspected,0,0,3.07,CONCORDANT_NS,High_Risk,50.0,0.82,49.5,C
+CD012178,Incidence of NEC,5,61.11,Fragile,Discordant,0,0,1.62,CONCORDANT_NS,Low_Risk,0.0,-0.16,61.4,B
+CD012186,Withdrawals due to AEs,105,69.18,Fragile,Confirmed,0,2,6.67,FALSE_REASSURANCE,High_Risk,65.0,11.79,39.5,D
+CD012214,"Regression of endometrial hyperplasia (with or without atypia) to proliferative, secretory or atrophic endometrium",4,35.56,Unstable,,,,2.2,FALSE_REASSURANCE,Low_Risk,0.0,0.59,43.3,C
+CD012268,Body weight,21,26.41,Unstable,Suspected,0,0,2.35,CONCORDANT_NS,Low_Risk,20.0,-0.47,51.2,C
+CD012397,"Specific behaviours: aggression, other episode of aggression (incidents per treatment days)",3,52.38,Fragile,,,,12.72,CONCORDANT_NS,Moderate_Risk,45.0,1.89,55.4,C
+CD012426,All-cause mortality at 90 days,4,80.0,Moderate,,,,2.2,CONCORDANT_NS,Low_Risk,10.0,-0.13,75.3,B
+CD012429,Total serious adverse events/effects,4,86.67,Moderate,,,,2.2,CONCORDANT_NS,Low_Risk,0.0,-0.1,80.4,A
+CD012445,Child emotional and behavioural adjustment – postintervention,5,78.57,Moderate,Suspected,0,0,3.29,CONCORDANT_NS,Low_Risk,15.0,0.77,70.2,B
+CD012503,Recurrence of ischemic stroke at the endpoint (for all studies),17,31.22,Unstable,Confirmed,1,1,1.23,FALSE_REASSURANCE,Low_Risk,20.0,-1.29,32.9,D
+CD012570,Adverse events,10,45.45,Unstable,Clean,0,1,1.18,CONCORDANT_NS,Low_Risk,20.0,-0.28,67.9,B
+CD012572,All-cause mortality,4,86.67,Moderate,,,,2.2,CONCORDANT_NS,Low_Risk,0.0,-0.44,80.4,A
+CD012586,Live birth or ongoing pregnancy,42,64.82,Fragile,Confirmed,1,2,1.03,CONCORDANT_NS,Low_Risk,20.0,0.09,54.7,C
+CD012623,Macular hole closure ,9,86.83,Moderate,Suspected,0,0,2.12,CONCORDANT_NS,Moderate_Risk,40.0,2.02,69.4,B
+CD012635,All-cause mortality at 30 days,6,73.47,Moderate,Suspected,0,0,2.26,CONCORDANT_NS,Low_Risk,10.0,-0.21,69.2,B
+CD012642,Hypernatraemia (≥ 150 mmol/L),4,73.33,Moderate,,,,2.2,CONCORDANT_NS,Low_Risk,10.0,-0.44,72.2,B
+CD012693,Cycle cancellations for poor response,8,54.32,Fragile,Clean,0,0,2.17,FALSE_REASSURANCE,Low_Risk,0.0,-0.15,64.0,B
+CD012712,Endotracheal reintubation,20,100.0,Robust,Suspected,1,2,1.07,CONCORDANT_SIG,Moderate_Risk,40.0,6.19,84.0,A
+CD012718,Caries arrest (at end of study follow-up),5,64.55,Fragile,Discordant,0,0,3.68,FALSE_REASSURANCE,Moderate_Risk,30.0,-0.89,48.1,C
+CD012757,Mortality at longest follow-up,3,30.56,Unstable,,,,6.48,FALSE_REASSURANCE,Low_Risk,0.0,0.65,40.9,C
+CD012850,Frequency of joint noise,5,66.67,Fragile,Discordant,0,0,2.01,CONCORDANT_NS,Low_Risk,0.0,-0.18,63.3,B
+CD012891,Ovarian insufficiency grouped by strict or broad definition,13,62.81,Fragile,Confirmed,1,1,3.28,FALSE_REASSURANCE,Moderate_Risk,35.0,0.91,41.7,C
+CD012905,Development of AKI,12,50.18,Fragile,Clean,0,0,2.59,FALSE_REASSURANCE,Moderate_Risk,25.0,1.97,58.8,C
+CD012925,Patient/client health status and well-being (undesirable outcomes),6,44.22,Unstable,Confirmed,1,2,3.26,CONCORDANT_NS,Moderate_Risk,30.0,0.35,46.0,C
+CD012942,"Comparison 1 All antidepressants versus placebo, Outcome 2 Acceptability",36,61.0,Fragile,Discordant,0,0,4.39,CONCORDANT_NS,High_Risk,55.0,5.77,53.1,C
+CD012967,Adverse events leading to cessation of treatment,3,91.67,Robust,,,,6.48,CONCORDANT_NS,Low_Risk,0.0,-0.15,82.8,A
+CD012993,Treatment-emergent adverse events (breakdown 2),13,42.86,Unstable,Confirmed,1,2,2.49,CONCORDANT_NS,Low_Risk,0.0,0.38,50.0,C
+CD013042,Participant reported treatment success,13,64.63,Fragile,Confirmed,1,2,2.65,CONCORDANT_NS,Low_Risk,10.0,-0.6,56.1,C
+CD013051,Resolution of ear discharge (1 to up to 2 weeks),7,53.17,Fragile,Confirmed,1,3,3.41,FALSE_REASSURANCE,High_Risk,50.0,-0.43,36.1,D
+CD013052,Subgroup analysis: CSOM diagnosis,5,100.0,Robust,Suspected,0,0,1.62,CONCORDANT_NS,Low_Risk,10.0,-0.22,78.5,B
+CD013053,Resolution of ear discharge,4,53.33,Fragile,,,,2.2,CONCORDANT_SIG,Low_Risk,15.0,1.52,75.2,B
+CD013054,Sensitivity analysis: unpublished - resolution of ear discharge 1 to 2 weeks,8,66.67,Fragile,Confirmed,1,2,2.59,CONCORDANT_SIG,Moderate_Risk,30.0,3.07,63.8,B
+CD013055,Resolution of ear discharge (2 to 4 weeks),3,41.67,Unstable,,,,6.48,FALSE_REASSURANCE,Low_Risk,0.0,0.65,46.1,C
+CD013056,Resolution of ear discharge (1–2 weeks),4,12.7,Unstable,,,,4.37,FALSE_REASSURANCE,High_Risk,50.0,-0.78,22.6,D
+CD013059,Treatment non-acceptability,5,10.58,Unstable,Suspected,0,0,1.62,FALSE_REASSURANCE,Low_Risk,0.0,-0.87,38.7,D
+CD013071,Treatment withdrawal due to adverse events,16,100.0,Robust,Suspected,0,0,1.09,CONCORDANT_NS,Low_Risk,0.0,-0.95,80.0,A
+CD013105,Bladder function ,5,68.52,Fragile,Discordant,0,0,2.9,CONCORDANT_NS,Low_Risk,0.0,-0.2,64.0,B
+CD013197,Serious adverse events (sensitivity analysis),64,60.61,Fragile,Discordant,0,0,6.25,CONCORDANT_NS,High_Risk,55.0,8.57,53.0,C
+CD013232,Adverse effects: neurological,121,59.02,Fragile,Discordant,0,0,1.01,CONCORDANT_NS,Low_Risk,10.0,-3.29,59.2,C
+CD013255,Sinus rhythm until hospital discharge or end of study follow-up (paroxysmal AF),9,66.35,Fragile,Confirmed,1,3,3.32,FALSE_REASSURANCE,Moderate_Risk,45.0,1.05,41.5,C
+CD013278,All-cause mortality during hospital stay,12,76.19,Moderate,Confirmed,1,1,1.14,CONCORDANT_NS,Low_Risk,10.0,-0.77,60.2,B
+CD013284,Mortality (all-cause),4,66.67,Fragile,,,,2.7,CONCORDANT_NS,Low_Risk,0.0,-0.15,71.1,B
+CD013295,Need for allogeneic blood transfusion (only trials included in the NMA),66,66.67,Fragile,Suspected,0,0,5.27,FALSE_REASSURANCE,High_Risk,55.0,8.56,50.1,C
+CD013332,SSI,10,60.61,Fragile,Discordant,0,0,2.67,FALSE_REASSURANCE,Low_Risk,0.0,0.0,51.2,C
+CD013342,Total adverse events,8,13.4,Unstable,Confirmed,1,2,2.5,FALSE_REASSURANCE,Low_Risk,10.0,-0.91,28.2,D
+CD013344,Therapy-related adverse events,6,66.67,Fragile,Discordant,0,0,1.42,CONCORDANT_NS,Low_Risk,0.0,-0.53,63.3,B
+CD013353,PIPP during endotracheal suctioning,6,68.71,Fragile,Suspected,0,0,3.26,FALSE_REASSURANCE,Low_Risk,15.0,-1.76,56.8,C
+CD013355,Neurological outcome: severe intraventricular haemorrhage,4,40.95,Unstable,,,,3.47,CONCORDANT_NS,Low_Risk,10.0,-0.25,57.1,C
+CD013358,Smoking cessation,6,59.41,Fragile,Discordant,0,0,3.3,CONCORDANT_NS,Moderate_Risk,30.0,0.85,56.3,C
+CD013366,Occlusion (sensitivity analyses),7,100.0,Robust,Clean,0,0,1.4,CONCORDANT_NS,Low_Risk,0.0,-0.31,90.0,A
+CD013396,Adverse events,16,96.36,Robust,Clean,0,0,2.7,CONCORDANT_NS,Low_Risk,10.0,0.32,87.2,A
+CD013408,All-cause mortality,5,29.1,Unstable,Suspected,0,0,2.67,FALSE_REASSURANCE,Low_Risk,0.0,0.34,45.2,C
+CD013414,Adverse events,15,68.75,Fragile,Clean,0,0,3.04,FALSE_REASSURANCE,Moderate_Risk,25.0,-2.04,65.3,B
+CD013421,Failure of hemostatic intervention,15,66.67,Fragile,Confirmed,1,2,3.17,FALSE_REASSURANCE,High_Risk,55.0,2.49,40.1,C
+CD013425,Leaving the study early: adverse effects,21,98.48,Robust,Confirmed,1,2,1.07,CONCORDANT_SIG,Moderate_Risk,25.0,1.14,75.7,B
+CD013429,Primary: Eustachian tube function measured by an objective or semi-objective test: improvement of tympanometry (by ear),4,71.11,Moderate,,,,2.2,CONCORDANT_SIG,Low_Risk,10.0,-0.9,84.5,A
+CD013445,Stone-free rate,39,66.63,Fragile,Confirmed,1,3,4.34,FALSE_REASSURANCE,High_Risk,75.0,2.05,37.1,D
+CD013456,Trauma-focused versus non trauma-focused interventions; outcome 3: Dropout from treatment,12,67.28,Fragile,Suspected,0,0,1.94,FALSE_REASSURANCE,Low_Risk,10.0,0.23,57.0,C
+CD013462,Rate of postoperative pancreatic fistula (grade B or C defined according to the 2005 ISGPF definition),17,55.91,Fragile,Discordant,0,0,3.33,CONCORDANT_NS,High_Risk,55.0,3.84,51.3,C
+CD013474,Treatment discontinuation,6,38.1,Unstable,Discordant,0,0,2.81,CONCORDANT_NS,High_Risk,50.0,1.59,45.8,C
+CD013476,Significant adverse events during maintenance therapy up to 6 months follow-up,3,100.0,Robust,,,,6.48,CONCORDANT_NS,Low_Risk,0.0,-0.41,86.7,A
+CD013508,MACE,4,93.33,Robust,,,,3.38,CONCORDANT_NS,Low_Risk,0.0,-0.24,83.6,A
+CD013539,Antidrug antibodies,29,85.87,Moderate,Clean,0,0,1.05,CONCORDANT_NS,Low_Risk,20.0,-0.73,82.1,A
+CD013541,Leaving the study early (> 12 months postintervention),8,100.0,Robust,Suspected,0,0,1.25,CONCORDANT_NS,Low_Risk,0.0,-0.36,80.0,A
+CD013561,Adverse events,5,88.36,Moderate,Suspected,0,0,2.71,CONCORDANT_NS,Low_Risk,0.0,0.64,75.9,B
+CD013571,Participant-reported cure or improvement: immediately after treatment,4,34.6,Unstable,,,,3.59,FALSE_REASSURANCE,Low_Risk,0.0,-0.14,42.8,C
+CD013590,SCD-related complications (number of participants),5,77.78,Moderate,Discordant,0,0,1.62,CONCORDANT_NS,Low_Risk,0.0,-0.46,67.2,B
+CD013591,Physical activity (other measures),13,56.46,Fragile,Confirmed,0,1,2.66,FALSE_REASSURANCE,High_Risk,50.0,-2.92,37.3,D
+CD013595,On-study mortality,3,41.67,Unstable,,,,6.48,FALSE_REASSURANCE,Low_Risk,0.0,0.19,46.1,C
+CD013613,Dropout for any reason at study endpoint,3,75.0,Moderate,,,,6.48,CONCORDANT_NS,Low_Risk,0.0,-0.11,75.0,B
+CD013614,Clinical improvement as measured by ACR20 response criteria or by the EULAR moderate response criteria or by PsARC criteria at 12 weeks,15,100.0,Robust,Confirmed,1,3,3.64,CONCORDANT_SIG,Moderate_Risk,40.0,0.78,74.0,B
+CD013631,Adverse events: any adverse event,3,91.67,Robust,,,,9.69,CONCORDANT_NS,Low_Risk,0.0,-0.44,82.8,A
+CD013643,"Number of minor adverse events (Clavien-Dindo I, II), short term (< 1 year) ",6,46.94,Unstable,Clean,0,0,2.71,FALSE_REASSURANCE,Moderate_Risk,25.0,0.32,57.7,C
+CD013672,Treatment retention,7,66.87,Fragile,Discordant,0,0,2.99,CONCORDANT_NS,Moderate_Risk,25.0,-0.91,59.7,C
+CD013715,Sensitivity analysis: pedACR70 at the latest time point,7,33.73,Unstable,Confirmed,1,2,2.73,FALSE_REASSURANCE,Moderate_Risk,25.0,-0.71,33.1,D
+CD013719,Sensitivity analysis. Oral small molecule inhibitors: baricitinib vs placebo,4,24.13,Unstable,,,,4.31,FALSE_REASSURANCE,Moderate_Risk,30.0,0.79,31.9,D
+CD013726,Adverse events,12,92.43,Robust,Suspected,0,0,3.22,CONCORDANT_NS,Moderate_Risk,40.0,1.35,71.4,B
+CD013745,NOACs versus antiplatelet therapy,3,36.11,Unstable,,,,6.48,FALSE_REASSURANCE,Low_Risk,0.0,-0.26,43.5,C
+CD013748,Poor functional outcome,8,24.69,Unstable,Suspected,0,0,1.25,FALSE_REASSURANCE,Low_Risk,0.0,0.13,43.6,C
+CD013757,Hospitalisation due to RSV infection,6,33.79,Unstable,Clean,0,0,2.58,FALSE_REASSURANCE,High_Risk,50.0,1.61,49.3,C
+CD013758,Any adverse event,4,89.52,Moderate,,,,2.2,CONCORDANT_NS,Low_Risk,20.0,-0.2,77.8,B
+CD013763,Rates of opioid-related adverse events (PONV),21,66.67,Fragile,Confirmed,1,2,2.1,CONCORDANT_SIG,Low_Risk,0.0,-1.28,68.3,B
+CD013764,Successful abortion,4,60.0,Fragile,,,,2.2,CONCORDANT_NS,Low_Risk,10.0,-0.11,66.0,B
+CD013773,Incidence of myopia,7,65.28,Fragile,Clean,0,0,1.31,CONCORDANT_SIG,Low_Risk,0.0,-1.43,87.8,A
+CD013774,Adverse events grade 3 to 5,3,28.57,Unstable,,,,12.73,FALSE_REASSURANCE,Moderate_Risk,30.0,0.0,34.0,D
+CD013781,All-cause mortality,14,55.45,Fragile,Confirmed,1,2,1.41,FALSE_REASSURANCE,Low_Risk,0.0,-0.62,44.4,C
+CD013789,"Scar thickness (ultrasound, PGT vs other scar management therapy)",38,87.42,Moderate,Suspected,0,0,3.85,CONCORDANT_NS,Moderate_Risk,40.0,2.35,69.6,B
+CD013800,All-cause death,48,62.55,Fragile,Suspected,0,0,6.13,FALSE_REASSURANCE,High_Risk,65.0,1.95,47.1,C
+CD013816,Thromboembolic events (composite),4,60.0,Fragile,,,,2.2,CONCORDANT_NS,Low_Risk,0.0,-0.13,68.0,B
+CD013821,Short-term complications,22,75.43,Moderate,Clean,0,0,4.38,CONCORDANT_NS,High_Risk,80.0,4.6,69.4,B
+CD013822,Knowledge - dichotomous (correct answers),15,52.18,Fragile,Confirmed,1,2,3.53,FALSE_REASSURANCE,High_Risk,70.0,-1.77,32.8,D
+CD013827,Miscarriage,14,71.11,Moderate,Discordant,0,0,1.91,CONCORDANT_NS,Low_Risk,0.0,-0.7,64.9,B
+CD013830,Positive-pressure ventilation after institution of treatment,7,98.81,Robust,Suspected,0,0,1.31,CONCORDANT_NS,Low_Risk,10.0,-0.7,78.1,B
+CD013834,Gait speed,8,62.96,Fragile,Suspected,0,0,3.0,CONCORDANT_NS,Moderate_Risk,30.0,1.76,62.5,B
+CD013844,Acceptability (dropouts),9,71.11,Moderate,Discordant,0,0,1.21,CONCORDANT_NS,Low_Risk,0.0,-0.59,64.9,B
+CD013874,Serious adverse events assessed with Grades 3/4 CTCAE over 24 months ,4,93.33,Robust,,,,2.2,CONCORDANT_NS,Low_Risk,0.0,-0.16,83.6,A
+CD013875,Clinical pregnancy – all studies,9,66.67,Fragile,Suspected,0,0,2.13,FALSE_REASSURANCE,Low_Risk,0.0,-0.09,58.3,C
+CD014040,Fertilization rate ,14,45.71,Unstable,Confirmed,0,1,3.45,FALSE_REASSURANCE,High_Risk,60.0,0.2,32.0,D
+CD014089,Adverse effects,6,16.33,Unstable,Clean,0,0,1.42,FALSE_REASSURANCE,Low_Risk,0.0,-0.83,50.7,C
+CD014145,Failed apnea reduction after 2 to 7 days,6,91.61,Robust,Suspected,0,0,2.17,CONCORDANT_NS,Low_Risk,0.0,-0.38,77.1,B
+CD014300,Acceptability at study endpoint: children,9,80.16,Moderate,Suspected,0,0,3.14,CONCORDANT_NS,High_Risk,90.0,2.5,59.6,C
+CD014428,Pain intensity,6,93.2,Robust,Suspected,0,0,3.25,FALSE_REASSURANCE,High_Risk,50.0,-0.93,60.1,B
+CD014541,Major bleeding: short-term (45 days or fewer),5,49.21,Unstable,Suspected,0,0,2.37,FALSE_REASSURANCE,Low_Risk,0.0,-0.54,52.2,C
+CD014544,Adverse events,12,41.39,Unstable,Clean,0,0,2.16,CONCORDANT_NS,Low_Risk,10.0,-0.3,68.0,B
+CD014585,Adverse events,12,30.77,Unstable,Confirmed,0,1,2.74,CONCORDANT_NS,High_Risk,65.0,2.81,36.0,D
+CD014594,First-pass success,7,95.83,Robust,Clean,0,0,3.06,CONCORDANT_SIG,Low_Risk,15.0,-0.67,96.3,A
+CD014617,Risk of ocular infection within one month of corneal abrasion,3,58.33,Fragile,,,,7.42,CONCORDANT_NS,Low_Risk,20.0,-0.23,63.2,B
+CD014624,Depression response (early phase),38,66.67,Fragile,Confirmed,1,1,1.63,CONCORDANT_SIG,Low_Risk,20.0,-1.69,65.3,B
+CD014666,Occurrence of falls: immediate postintervention,6,76.87,Moderate,Suspected,0,0,3.03,CONCORDANT_NS,High_Risk,80.0,2.74,59.9,C
+CD014678,All-cause mortality,10,43.72,Unstable,Suspected,0,0,1.94,FALSE_REASSURANCE,Low_Risk,10.0,0.51,48.8,C
+CD014688,Child/adolescent quality of life between baseline and 12 months (self-reported) ,4,53.97,Fragile,,,,4.81,CONCORDANT_NS,Moderate_Risk,30.0,-0.55,59.2,C
+CD014713,Unplanned hospital presentation rates - unplanned hospital admissions within one month (30 days),5,56.35,Fragile,Clean,0,0,2.88,CONCORDANT_NS,Low_Risk,20.0,0.87,71.7,B
+CD014722,Diagnosis of mental disorders at 1-6 months ,6,59.18,Fragile,Suspected,0,0,2.14,FALSE_REASSURANCE,Low_Risk,10.0,-0.04,54.2,C
+CD014736,Mortality by end of follow-up,4,93.33,Robust,,,,2.2,CONCORDANT_NS,Low_Risk,0.0,-0.12,83.6,A
+CD014741,Adverse events,13,25.85,Unstable,Confirmed,0,1,2.54,FALSE_REASSURANCE,Low_Risk,20.0,-0.28,31.0,D
+CD014758,Change in refractive error from baseline,22,68.12,Fragile,Suspected,0,0,3.76,FALSE_REASSURANCE,Moderate_Risk,35.0,0.04,53.6,C
+CD014762,Adverse events (to day 30 after randomisation),7,86.31,Moderate,Suspected,0,0,2.41,CONCORDANT_NS,Low_Risk,20.0,0.48,72.2,B
+CD014763,Surgical site infection,9,66.67,Fragile,Confirmed,1,2,1.21,CONCORDANT_SIG,Moderate_Risk,30.0,3.28,63.8,B
+CD014769,Any VTE,27,54.99,Fragile,Clean,0,0,1.55,FALSE_REASSURANCE,Moderate_Risk,35.0,1.29,59.0,C
+CD014792,Major complications,11,100.0,Robust,Suspected,0,0,1.15,CONCORDANT_NS,Low_Risk,0.0,-0.68,80.0,A
+CD014803,Attrition (dropouts),5,55.56,Fragile,Suspected,0,0,1.62,CONCORDANT_NS,Low_Risk,0.0,-0.15,64.4,B
+CD014811,All-cause mortality,4,93.33,Robust,,,,2.44,CONCORDANT_NS,Low_Risk,0.0,-0.41,83.6,A
+CD014820,Acute kidney injury,17,57.67,Fragile,Confirmed,0,1,2.06,CONCORDANT_NS,Moderate_Risk,45.0,1.44,48.4,C
+CD014833,Breastfeeding exclusivity short-term 1 to 3 months post-intervention,5,66.14,Fragile,Discordant,0,0,3.09,CONCORDANT_NS,Moderate_Risk,25.0,-0.62,59.4,C
+CD014844,Uterine infection,6,62.13,Fragile,Confirmed,0,1,2.62,CONCORDANT_NS,Low_Risk,10.0,0.41,55.2,C
+CD014845,Subgroup analysis: food selection/purchasing by label type (kcal),20,64.4,Fragile,Confirmed,1,2,1.88,CONCORDANT_SIG,High_Risk,50.0,2.03,60.0,B
+CD014852,Complication (pneumonia) during intervention phase,4,65.4,Fragile,,,,4.19,CONCORDANT_NS,Low_Risk,15.0,-0.46,67.5,B
+CD014855,Intraperitoneal abscess,7,86.31,Moderate,Suspected,0,0,2.74,CONCORDANT_NS,Low_Risk,15.0,0.77,73.0,B
+CD014861,Proportion of participants completing treatment regimen as planned,4,43.17,Unstable,,,,3.92,CONCORDANT_NS,Low_Risk,15.0,-0.38,57.1,C
+CD014869, All-cause mortality (between  1 and 5 years),8,83.6,Moderate,Suspected,0,0,2.26,CONCORDANT_NS,Moderate_Risk,45.0,1.66,67.5,B
+CD014871,Self-selected comfortable walking speed,8,65.96,Fragile,Clean,0,0,2.9,FALSE_REASSURANCE,Low_Risk,15.0,0.62,65.8,B
+CD014872,Overall response rate,13,69.05,Fragile,Clean,0,0,2.71,CONCORDANT_SIG,Low_Risk,0.0,-0.15,89.2,A
+CD014889,All-cause mortality,5,37.04,Unstable,Suspected,0,0,1.62,FALSE_REASSURANCE,Low_Risk,0.0,-0.27,48.0,C
+CD014914,Adverse events (treatment): primary analysis,16,65.55,Fragile,Confirmed,1,2,2.73,FALSE_REASSURANCE,Low_Risk,20.0,-0.41,44.9,C
+CD014923,"Patient disability - number of participants who improved (unpaired, parallel assessment < 12 months)",3,30.56,Unstable,,,,9.72,FALSE_REASSURANCE,Low_Risk,0.0,-0.85,40.9,C
+CD014932,Improvement in quality-of-life measures: family impact,7,88.29,Moderate,Suspected,0,0,3.04,CONCORDANT_NS,Moderate_Risk,25.0,0.3,72.2,B
+CD014935,All-cause mortality,3,75.0,Moderate,,,,6.48,CONCORDANT_NS,Low_Risk,0.0,-0.08,75.0,B
+CD014937,Subgroup analysis: acute kidney injury by population,66,65.25,Fragile,Confirmed,1,2,5.35,FALSE_REASSURANCE,High_Risk,65.0,16.37,38.1,D
+CD014941,"Cenobamate versus placebo - subgroup analysis, 50% responder rate",4,73.33,Moderate,,,,2.32,CONCORDANT_SIG,Low_Risk,0.0,0.13,87.6,A
+CD014944,Proportion of participants without treatment success at the longest follow-up (1–4 years),3,48.81,Unstable,,,,11.02,CONCORDANT_NS,Low_Risk,15.0,0.87,59.8,C
+CD014959,Proportion of people with laboratory-confirmed leptospirosis regardless of the presence of an identified clinical syndrome (inclusive of asymptomatic cases) ,5,51.85,Fragile,Discordant,0,0,3.26,CONCORDANT_NS,High_Risk,50.0,0.17,50.6,C
+CD014960,All-cause mortality,3,75.0,Moderate,,,,7.69,CONCORDANT_NS,Low_Risk,0.0,-0.3,75.0,B
+CD014964,First-attempt success (Types of ultrasound guidance: preprocedural versus real‐time),54,66.67,Fragile,Confirmed,1,3,5.93,FALSE_REASSURANCE,High_Risk,65.0,3.43,38.6,D
+CD014965,Other side effects: sedation,8,81.48,Moderate,Clean,0,0,1.25,CONCORDANT_SIG,Low_Risk,0.0,0.31,93.5,A
+CD014966,Death,28,75.59,Moderate,Confirmed,0,2,4.38,CONCORDANT_NS,High_Risk,90.0,7.81,48.0,C
+CD014967,Mortality before hospital discharge,5,100.0,Robust,Suspected,0,0,1.62,CONCORDANT_NS,Low_Risk,0.0,-0.4,80.0,A
+CD015003,Adverse events,10,5.77,Unstable,Confirmed,1,1,2.24,FALSE_REASSURANCE,Low_Risk,10.0,-1.88,25.5,D
+CD015014,Mortality (proportion of residents who died),24,37.33,Unstable,Confirmed,1,2,1.06,CONCORDANT_NS,Low_Risk,20.0,-0.76,45.1,C
+CD015033,Imaging response. No-improvement in steatosis on ultrasound (range from 5 months to 12 months),4,10.16,Unstable,,,,2.73,FALSE_REASSURANCE,Low_Risk,15.0,1.14,28.4,D
+CD015038,Wound infection,9,56.98,Fragile,Confirmed,0,1,1.9,FALSE_REASSURANCE,Low_Risk,0.0,0.5,44.9,C
+CD015040,Stimulation frequency: low versus high frequency,7,52.58,Fragile,Confirmed,1,1,2.88,CONCORDANT_NS,Low_Risk,15.0,-0.58,51.2,C
+CD015042,Number of women who completed treatment,7,70.83,Moderate,Discordant,0,0,1.31,CONCORDANT_NS,Low_Risk,10.0,-0.37,63.3,B
+CD015064,Pimecrolimus 1% versus vehicle,4,63.49,Fragile,,,,4.42,CONCORDANT_NS,Moderate_Risk,30.0,-1.12,63.6,B
+CD015083,Back-related function,67,93.28,Robust,Suspected,0,0,5.99,FALSE_REASSURANCE,High_Risk,55.0,7.66,59.4,C
+CD015087,Nausea and/or vomiting,7,84.13,Moderate,Suspected,0,0,2.35,CONCORDANT_NS,Low_Risk,20.0,-0.27,71.4,B
+CD015120,Smoking cessation,5,94.44,Robust,Confirmed,1,2,1.62,CONCORDANT_NS,Low_Risk,0.0,-0.16,68.1,B
+CD015122,Blood transfusion,9,46.83,Unstable,Confirmed,1,1,2.18,FALSE_REASSURANCE,Low_Risk,0.0,0.94,41.4,C
+CD015124,Assessment of prognostic factors around breast cancer diagnosis,8,96.3,Robust,Suspected,0,0,1.25,CONCORDANT_SIG,Low_Risk,0.0,-0.78,88.7,A
+CD015134,Preterm birth,6,82.77,Moderate,Clean,0,0,2.02,CONCORDANT_NS,Low_Risk,20.0,0.12,81.0,A
+CD015140,Risk of relapse in drug-off time - fixed-effect model,5,66.67,Fragile,Discordant,0,0,3.02,CONCORDANT_NS,Moderate_Risk,25.0,0.73,59.6,C
+CD015145,Nausea and vomiting,3,88.89,Moderate,,,,6.48,CONCORDANT_NS,Low_Risk,0.0,-0.53,81.5,A
+CD015160,Clinical recurrence or reoperation for recurrence within one year of repair,4,15.56,Unstable,,,,2.2,FALSE_REASSURANCE,Low_Risk,0.0,-0.71,33.9,D
+CD015192,Surgical site infection rate,6,80.95,Moderate,Suspected,0,0,2.17,CONCORDANT_NS,Low_Risk,0.0,-0.23,73.3,B
+CD015213,Recurrence rate,12,66.67,Fragile,Clean,0,0,1.14,CONCORDANT_SIG,Low_Risk,0.0,-1.67,88.3,A
+CD015215,"Presence/persistence of OME, randomised by child (long-term)",3,100.0,Robust,,,,6.48,CONCORDANT_NS,Low_Risk,10.0,-0.24,84.7,A
+CD015219,All adverse events,18,37.59,Unstable,Discordant,0,0,3.44,FALSE_REASSURANCE,Moderate_Risk,35.0,0.49,37.9,D
+CD015229,Opiate consumption at 3 months,9,100.0,Robust,Clean,1,1,2.32,CONCORDANT_SIG,Low_Risk,20.0,-2.39,97.0,A
+CD015252,Presence or persistence of OME,7,31.55,Unstable,Confirmed,1,2,1.31,CONCORDANT_SIG,Low_Risk,10.0,-1.05,54.5,C
+CD015254,Sensitivity analysis: persistence (short-term) including cases of acute otitis (Mandel 1987),10,31.6,Unstable,Suspected,0,0,2.98,FALSE_REASSURANCE,High_Risk,65.0,2.58,36.3,D
+CD015255,Persistence of OME (very short-term - up to 6 weeks),7,8.53,Unstable,Confirmed,1,2,3.12,FALSE_REASSURANCE,High_Risk,50.0,-0.04,20.5,D
+CD015284,Seizure freedom,5,23.54,Unstable,Discordant,0,0,3.31,FALSE_REASSURANCE,Low_Risk,15.0,0.41,36.0,D
+CD015314,Tobacco cessation at longest follow-up,21,66.67,Fragile,Confirmed,1,3,3.64,FALSE_REASSURANCE,Moderate_Risk,35.0,0.01,43.1,C
+CD015326,zBMI (Medium Term),16,66.67,Fragile,Suspected,0,0,2.07,FALSE_REASSURANCE,Low_Risk,10.0,0.61,56.8,C
+CD015328,BMI short-term,27,22.05,Unstable,Suspected,0,0,3.84,FALSE_REASSURANCE,High_Risk,65.0,3.36,33.0,D
+CD015330,BMI short term,11,72.22,Moderate,Discordant,0,0,1.15,CONCORDANT_NS,Low_Risk,20.0,0.61,62.3,B
+CD015331,Leaving the study early - for any reason - overall acceptability (separated time points),48,75.51,Moderate,Clean,0,0,1.03,CONCORDANT_SIG,Low_Risk,20.0,0.07,88.4,A
+CD015332,Leaving the study early – for any reason – overall acceptability (separated time points),5,94.44,Robust,Clean,0,0,1.62,CONCORDANT_NS,Low_Risk,10.0,-0.36,86.6,A
+CD015350,Proportion with non-serious or non-severe harms/adverse events,9,91.43,Robust,Clean,0,0,2.84,CONCORDANT_NS,High_Risk,50.0,1.22,79.5,B
+CD015373,Tolerability,5,71.43,Moderate,Suspected,0,0,2.02,CONCORDANT_NS,Low_Risk,0.0,-0.19,70.0,B
+CD015383,Anxiety on STAI-T (scale 20 to 80),5,51.85,Fragile,Suspected,0,0,1.62,CONCORDANT_SIG,Low_Risk,0.0,0.19,73.1,B
+CD015387,All-cause mortality at the end of scheduled follow-up,21,66.67,Fragile,Confirmed,1,2,1.98,CONCORDANT_SIG,Moderate_Risk,35.0,1.33,63.1,B
+CD015395,Worsening of clinical status at day 28: admission to hospital or death (subgroup analysis based on ethnicity),4,77.78,Moderate,,,,2.2,CONCORDANT_SIG,Low_Risk,0.0,-0.74,89.6,A
+CD015432,Number of children who required rescue medication 2 hours to less than 24 hours postintervention,8,51.85,Fragile,Discordant,0,0,2.92,CONCORDANT_NS,High_Risk,75.0,2.26,46.9,C
+CD015443,Discontinuations due to adverse events,19,68.33,Fragile,Clean,0,0,3.2,FALSE_REASSURANCE,Moderate_Risk,40.0,1.95,62.9,B
+CD015448,Mean change from baseline in symptom scores at 4 weeks,7,68.85,Fragile,Confirmed,1,1,2.27,CONCORDANT_NS,Low_Risk,20.0,-1.38,56.1,C
+CD015476,Adenoma detection rate,15,68.55,Fragile,Confirmed,0,2,3.31,FALSE_REASSURANCE,High_Risk,65.0,2.41,39.2,D
+CD015514,Adverse events - outer retinal folds,3,75.0,Moderate,,,,9.43,CONCORDANT_NS,Low_Risk,0.0,0.65,75.0,B
+CD015518,Cancer-related fatigue ≤ 12 weeks,12,66.67,Fragile,Suspected,0,0,3.57,FALSE_REASSURANCE,Moderate_Risk,30.0,-3.19,53.8,C
+CD015520,CRF ≤ 12 weeks,5,42.59,Unstable,Suspected,0,0,1.62,FALSE_REASSURANCE,Low_Risk,0.0,-0.35,49.9,C
+CD015524,Analysis 1.8. Outcome 5: Proportion of participants with non-serious adverse events,4,93.33,Robust,,,,2.2,CONCORDANT_NS,Low_Risk,0.0,-0.38,83.6,A
+CD015532,Overall mortality and in-hospital mortality,11,66.8,Fragile,Confirmed,1,1,2.87,CONCORDANT_NS,Moderate_Risk,45.0,2.71,51.6,C
+CD015536,Proportion of people with serious adverse events,10,82.54,Moderate,Suspected,0,0,2.62,CONCORDANT_NS,Low_Risk,15.0,1.22,71.6,B
+CD015551,Any-grade adverse events (up to 30 days after final dose),3,75.0,Moderate,,,,6.48,CONCORDANT_NS,Low_Risk,10.0,-0.24,73.0,B
+CD015573,Complications of treatment,4,66.67,Fragile,,,,2.2,CONCORDANT_NS,Low_Risk,0.0,-0.56,71.1,B
+CD015584,Placement success,13,66.67,Fragile,Confirmed,1,2,2.66,CONCORDANT_NS,High_Risk,50.0,2.24,50.8,C
+CD015588,All-cause death,16,68.63,Fragile,Clean,0,0,2.14,FALSE_REASSURANCE,Low_Risk,20.0,-0.85,66.0,B
+CD015636,Subgroup investigations – dengue virus (DENV) serotype,5,77.78,Moderate,Clean,0,0,1.62,CONCORDANT_SIG,Low_Risk,0.0,0.7,92.2,A
+CD015673,Dropouts,14,91.85,Robust,Suspected,0,0,1.11,CONCORDANT_NS,Low_Risk,20.0,-0.97,74.1,B
+CD015698,Anastomotic leakage (Subgroup analysis: IPC Types),3,100.0,Robust,,,,6.48,CONCORDANT_NS,Low_Risk,0.0,-0.19,86.7,A
+CD015721,Functional independence: mRS score < 3 within 90 days,6,41.5,Unstable,Discordant,0,0,2.33,CONCORDANT_NS,Low_Risk,10.0,-0.34,53.0,C
+CD015746,Acute typhoid fever,6,71.43,Moderate,Suspected,0,0,3.01,CONCORDANT_SIG,Moderate_Risk,25.0,0.87,76.3,B
+CD015749,Occurrence of adverse events,3,75.0,Moderate,,,,9.83,CONCORDANT_NS,Low_Risk,0.0,-0.15,75.0,B
+CD015751,Participant discontinuation,3,100.0,Robust,,,,6.48,CONCORDANT_NS,Low_Risk,0.0,-0.18,86.7,A
+CD015779,Recurrence of rheumatic fever,6,60.32,Fragile,Confirmed,1,1,1.42,CONCORDANT_SIG,Low_Risk,0.0,-0.44,66.1,B
+CD015786,Early adverse effects,10,78.79,Moderate,Confirmed,0,1,1.18,CONCORDANT_SIG,Low_Risk,0.0,-1.51,72.6,B
+CD015788,Proportion of participants who were adherent,8,15.87,Unstable,Confirmed,1,1,3.01,FALSE_REASSURANCE,Low_Risk,15.0,0.39,28.3,D
+CD015804,Proportion of participants who experienced TEAEs during the study period,8,96.3,Robust,Clean,0,0,1.41,CONCORDANT_NS,Low_Risk,10.0,0.59,87.2,A
+CD015820,Adverse events,4,73.33,Moderate,,,,2.2,CONCORDANT_NS,Low_Risk,0.0,-0.27,74.2,B
+CD015824,Clinical worsening,5,67.99,Fragile,Clean,0,0,1.62,CONCORDANT_SIG,Low_Risk,0.0,0.7,88.8,A
+CD015830,Duration of delirium,4,31.43,Unstable,,,,3.22,FALSE_REASSURANCE,Low_Risk,0.0,0.17,41.3,C
+CD015849,All-cause death,7,45.63,Unstable,Clean,0,0,2.04,FALSE_REASSURANCE,Low_Risk,20.0,0.51,58.0,C
+CD015854,Serious adverse event,5,88.89,Moderate,Suspected,0,0,1.62,CONCORDANT_NS,Low_Risk,0.0,-0.45,76.1,B
+CD015894,Pain assessed with a validated scale for procedural pain in newborns during the procedure,7,66.67,Fragile,Clean,0,0,3.0,FALSE_REASSURANCE,Low_Risk,15.0,-0.14,66.1,B
+CD015932,Rate of pulmonary complications – pneumonia (with RCT),10,58.01,Fragile,Suspected,0,1,3.31,FALSE_REASSURANCE,High_Risk,65.0,1.49,45.6,C
+CD015968,Waist circumference (cm) - End of study,3,91.67,Robust,,,,7.71,CONCORDANT_NS,Low_Risk,0.0,-0.22,82.8,A
+CD016031,"Comparison 3: Lateral vs posterior, Outcome 15: Adverse events, implant related (categorical data)",28,85.39,Moderate,Clean,0,0,1.05,CONCORDANT_NS,Low_Risk,0.0,-0.12,84.9,A
+CD016064,Adverse events,5,64.29,Fragile,Confirmed,1,2,1.62,CONCORDANT_NS,Low_Risk,0.0,-0.31,57.5,C
+CD016119,Requirement for blood transfusion,16,83.94,Moderate,Suspected,0,0,2.57,FALSE_REASSURANCE,Low_Risk,10.0,-0.6,62.9,B
+CD016120,Side effects,4,46.67,Unstable,,,,4.4,CONCORDANT_NS,Moderate_Risk,40.0,-0.04,53.8,C
+CD016131,All-cause medically attended acute respiratory illnesses (MAARI),5,88.89,Moderate,Suspected,0,0,1.62,CONCORDANT_NS,Low_Risk,0.0,-0.66,76.1,B
+CD016136,Implementation outcome,30,98.92,Robust,Suspected,0,1,4.75,FALSE_REASSURANCE,Moderate_Risk,40.0,-1.19,63.6,B
+CD016147,Manual removal of the placenta (end of treatment),3,97.62,Robust,,,,10.82,CONCORDANT_NS,Low_Risk,15.0,0.61,82.6,A
+CD016148,2nd degree tears,4,66.67,Fragile,,,,2.2,CONCORDANT_NS,Low_Risk,20.0,-0.16,67.1,B
+CD016211,Maternal sepsis: subgroup analysis (polypharmacy vs monopharmacy),5,83.33,Moderate,Clean,0,0,1.62,CONCORDANT_SIG,Low_Risk,20.0,-0.4,91.2,A
+CD016278,Blood transfusion,4,93.33,Robust,,,,2.65,CONCORDANT_NS,Low_Risk,20.0,-0.43,79.6,B

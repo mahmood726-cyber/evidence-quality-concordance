@@ -1,13 +1,64 @@
 """Build dashboard.html by embedding reviews.json and writing the full single-file app."""
+import argparse
 import json
+import os
 import re
 from pathlib import Path
 
+PROJECT_ROOT = Path(__file__).resolve().parent
+DEFAULT_REVIEWS_JSON = PROJECT_ROOT / "data" / "reviews.json"
+DEFAULT_DASHBOARD_HTML = PROJECT_ROOT / "dashboard.html"
+DEFAULT_DASHBOARD_INDEX_HTML = PROJECT_ROOT / "dashboard" / "index.html"
+DIMENSION_LABELS = ["Fragility", "Bias", "Prediction", "ORB"]
+
+
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(
+        description="Build EvidenceQuality dashboard HTML from reviews.json."
+    )
+    parser.add_argument(
+        "--reviews-json",
+        dest="reviews_json",
+        help="Override input reviews JSON path.",
+    )
+    parser.add_argument(
+        "--out",
+        dest="out_html",
+        help="Override output dashboard HTML path.",
+    )
+    parser.add_argument(
+        "--index-out",
+        dest="index_html",
+        help="Optional mirrored output path for dashboard/index.html.",
+    )
+    return parser.parse_args(argv)
+
+
+ARGS = parse_args() if __name__ == "__main__" else parse_args([])
+reviews_path = Path(ARGS.reviews_json or os.environ.get("EVIDENCE_QUALITY_REVIEWS_JSON", DEFAULT_REVIEWS_JSON))
+out_path = Path(ARGS.out_html or os.environ.get("EVIDENCE_QUALITY_DASHBOARD_HTML", DEFAULT_DASHBOARD_HTML))
+default_index_out = out_path.parent / "dashboard" / "index.html" if out_path.name == "dashboard.html" else DEFAULT_DASHBOARD_INDEX_HTML
+index_out_path = Path(
+    ARGS.index_html
+    or os.environ.get("EVIDENCE_QUALITY_DASHBOARD_INDEX_HTML", default_index_out)
+)
+
 # Load compact JSON
-with open(r'C:\EvidenceQuality\data\reviews.json', encoding='utf-8') as f:
+with open(reviews_path, encoding='utf-8') as f:
     data = json.load(f)
 
 json_data = json.dumps(data, separators=(',', ':'))
+review_count = len(data)
+review_word = "review" if review_count == 1 else "reviews"
+dimension_count = len(DIMENSION_LABELS)
+dimension_list = ", ".join(DIMENSION_LABELS)
+dashboard_subtitle = (
+    f"{review_count} Cochrane {review_word} graded across "
+    f"{dimension_count} dimensions: {dimension_list}"
+)
+embedded_data_summary = (
+    f"{review_count} Cochrane {review_word}, {dimension_count} dimensions, nested JSON"
+)
 
 # Safety: verify no </script> in JSON
 assert '</script>' not in json_data.lower(), "ERROR: JSON contains </script> — cannot embed safely"
@@ -1023,6 +1074,15 @@ document.addEventListener('DOMContentLoaded', function() {
 </html>""")
 
 html = ''.join(html_parts)
+html = html.replace(
+    "403 Cochrane reviews graded across 4 dimensions: Fragility, Bias, Prediction, ORB",
+    dashboard_subtitle,
+)
+html = html.replace(r"Source: C:\EvidenceQuality\data\reviews.json", f"Source: {reviews_path}")
+html = html.replace(
+    "403 Cochrane reviews, 4 dimensions, nested JSON",
+    embedded_data_summary,
+)
 
 # ============================================================
 # SAFETY CHECKS
@@ -1050,7 +1110,13 @@ for i, blk in enumerate(script_blocks):
 print(f"\nTotal HTML: {len(html):,} bytes ({len(html)//1024} KB)")
 
 # Write it
-out_path = Path(r'C:\EvidenceQuality\dashboard.html')
+out_path.parent.mkdir(parents=True, exist_ok=True)
 out_path.write_text(html, encoding='utf-8')
 print(f"\nWritten: {out_path}")
+
+if index_out_path != out_path:
+    index_out_path.parent.mkdir(parents=True, exist_ok=True)
+    index_out_path.write_text(html, encoding='utf-8')
+    print(f"Mirrored: {index_out_path}")
+
 print("SUCCESS")
