@@ -2,24 +2,24 @@
 
 [![ci](https://github.com/mahmood726-cyber/evidence-quality-concordance/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/mahmood726-cyber/evidence-quality-concordance/actions/workflows/ci.yml) [![codeql](https://github.com/mahmood726-cyber/evidence-quality-concordance/actions/workflows/codeql.yml/badge.svg?branch=master)](https://github.com/mahmood726-cyber/evidence-quality-concordance/actions/workflows/codeql.yml) [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![python: 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
 
-EvidenceQuality builds a multi-dimensional evidence-quality dataset and concordance analysis from sibling project outputs on `C:\`.
+EvidenceQuality builds a multi-dimensional evidence-quality dataset and concordance analysis from sibling project outputs in the shared projects root.
 
 ## Expected sibling projects
 
-By default the scripts look for these folders next to `C:\EvidenceQuality`:
+By default the scripts look for these sibling repos next to `EvidenceQuality`:
 
-- `C:\FragilityAtlas`
-- `C:\BiasForensics`
-- `C:\PredictionGap`
-- `C:\OutcomeReportingBias`
-- `C:\MetaReproducer`
-- `C:\OverlapDetector`
+- `FragilityAtlas`
+- `BiasForensics`
+- `PredictionGap`
+- `OutcomeReportingBias`
+- `MetaReproducer`
+- `OverlapDetector`
 
-The older fallback path `C:\Models\MetaReproducer` is still supported for concordance builds.
+A legacy `Models/MetaReproducer` fallback under the source root is still supported for concordance builds.
 
 ## Quick start
 
-From `C:\EvidenceQuality`:
+From the repo root:
 
 ```bash
 python run_all.py

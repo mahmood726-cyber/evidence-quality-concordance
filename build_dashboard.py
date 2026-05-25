@@ -560,7 +560,7 @@ body {
 <script>
 /* ================================================================
    EMBEDDED DATA
-   Source: C:\EvidenceQuality\data\reviews.json
+   Source: __REVIEWS_SOURCE__
    403 Cochrane reviews, 4 dimensions, nested JSON
 ================================================================ */
 var REVIEWS = """)
@@ -1078,7 +1078,7 @@ html = html.replace(
     "403 Cochrane reviews graded across 4 dimensions: Fragility, Bias, Prediction, ORB",
     dashboard_subtitle,
 )
-html = html.replace(r"Source: C:\EvidenceQuality\data\reviews.json", f"Source: {reviews_path}")
+html = html.replace("__REVIEWS_SOURCE__", str(reviews_path))
 html = html.replace(
     "403 Cochrane reviews, 4 dimensions, nested JSON",
     embedded_data_summary,

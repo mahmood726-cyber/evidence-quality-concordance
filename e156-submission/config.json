@@ -3,7 +3,7 @@
   "slug": "evidence-quality",
   "author": "Mahmood Ahmad",
   "date": "2026-03-26",
-  "path": "C:\\EvidenceQuality",
+  "path": "..",
   "type": "methods",
   "primary_estimand": "Mean absolute pairwise correlation",
   "summary": "Six quality dimensions in 403 Cochrane reviews are largely orthogonal (mean |rho| = 0.176).",
