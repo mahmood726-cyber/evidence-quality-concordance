@@ -1,5 +1,7 @@
 # EvidenceQuality
 
+[![ci](https://github.com/mahmood726-cyber/evidence-quality-concordance/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/mahmood726-cyber/evidence-quality-concordance/actions/workflows/ci.yml) [![codeql](https://github.com/mahmood726-cyber/evidence-quality-concordance/actions/workflows/codeql.yml/badge.svg?branch=master)](https://github.com/mahmood726-cyber/evidence-quality-concordance/actions/workflows/codeql.yml) [![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE) [![python: 3.10+](https://img.shields.io/badge/python-3.10%2B-blue)](https://www.python.org/)
+
 EvidenceQuality builds a multi-dimensional evidence-quality dataset and concordance analysis from sibling project outputs on `C:\`.
 
 ## Expected sibling projects
