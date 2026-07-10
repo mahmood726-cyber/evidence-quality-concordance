@@ -297,8 +297,18 @@ def spearman(x, y):
         return 0, 1
     rx = rank_data(x)
     ry = rank_data(y)
-    d2 = sum((a - b) ** 2 for a, b in zip(rx, ry))
-    rho = 1 - 6 * d2 / (n * (n * n - 1))
+    # Spearman rho = Pearson correlation of the (tie-averaged) ranks. This
+    # reduces exactly to the 1 - 6*sum(d^2)/(n*(n^2-1)) shortcut when there are
+    # no ties, but the shortcut is biased whenever ranks are tied, so compute
+    # Pearson-on-ranks directly to stay correct in both cases.
+    mx = sum(rx) / n
+    my = sum(ry) / n
+    cov = sum((a - mx) * (b - my) for a, b in zip(rx, ry))
+    vx = sum((a - mx) ** 2 for a in rx)
+    vy = sum((b - my) ** 2 for b in ry)
+    if vx == 0 or vy == 0:
+        return 0, 1
+    rho = cov / math.sqrt(vx * vy)
     if abs(rho) >= 1:
         return rho, 0
     t = rho * math.sqrt((n - 2) / (1 - rho * rho))
@@ -371,7 +381,13 @@ def build_summary(rows, correlation_payload):
     grades = Counter(r["grade"] for r in rows)
     scores = [r["composite_score"] for r in rows]
     mean_score = sum(scores) / len(scores)
-    median_score = sorted(scores)[len(scores) // 2]
+    sorted_scores = sorted(scores)
+    _mid = len(sorted_scores) // 2
+    median_score = (
+        sorted_scores[_mid]
+        if len(sorted_scores) % 2
+        else (sorted_scores[_mid - 1] + sorted_scores[_mid]) / 2
+    )
 
     fragile_and_biased = sum(
         1

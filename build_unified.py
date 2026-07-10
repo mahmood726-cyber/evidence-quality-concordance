@@ -294,7 +294,15 @@ def _summary_payload(reviews):
     """Build the legacy summary JSON payload from nested review records."""
     scored = [r["quality_score"] for r in reviews if r.get("quality_score") is not None]
     sorted_scores = sorted(scored)
-    median = sorted_scores[len(sorted_scores) // 2] if sorted_scores else None
+    if sorted_scores:
+        _mid = len(sorted_scores) // 2
+        median = (
+            sorted_scores[_mid]
+            if len(sorted_scores) % 2
+            else (sorted_scores[_mid - 1] + sorted_scores[_mid]) / 2
+        )
+    else:
+        median = None
     grades = {
         grade: sum(1 for r in reviews if r.get("quality_grade") == grade)
         for grade in ["A", "B", "C", "D"]
@@ -390,7 +398,10 @@ def print_summary(reviews, out_path):
     print(f"  Completeness: {comp4} with 4/4, {comp3} with 3/4")
     if scored:
         print(f"  Mean quality: {sum(scored) / len(scored):.1f}/100")
-        print(f"  Median quality: {sorted(scored)[len(scored) // 2]:.1f}/100")
+        _s = sorted(scored)
+        _m = len(_s) // 2
+        _median = _s[_m] if len(_s) % 2 else (_s[_m - 1] + _s[_m]) / 2
+        print(f"  Median quality: {_median:.1f}/100")
     print()
     for grade in ["A", "B", "C", "D"]:
         count = grades.get(grade, 0)

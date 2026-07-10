@@ -1078,7 +1078,9 @@ html = html.replace(
     "403 Cochrane reviews graded across 4 dimensions: Fragility, Bias, Prediction, ORB",
     dashboard_subtitle,
 )
-html = html.replace("__REVIEWS_SOURCE__", str(reviews_path))
+# Emit only the source filename, never the builder's absolute/local path, so the
+# committed GitHub-Pages asset carries no machine-specific path (e.g. WSL /mnt/c/...).
+html = html.replace("__REVIEWS_SOURCE__", reviews_path.name)
 html = html.replace(
     "403 Cochrane reviews, 4 dimensions, nested JSON",
     embedded_data_summary,

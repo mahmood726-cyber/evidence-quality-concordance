@@ -512,7 +512,9 @@ class TestBuildScripts:
         html = dashboard_html.read_text(encoding="utf-8")
         index_html = dashboard_index_html.read_text(encoding="utf-8")
         assert "2 Cochrane reviews graded across 4 dimensions" in html
-        assert f"Source: {reviews_json}" in html
+        # Only the bare filename may be embedded -- never the builder's absolute path.
+        assert f"Source: {reviews_json.name}" in html
+        assert str(reviews_json) not in html
         assert "CD300001" in html
         assert html == index_html
         assert "SUCCESS" in result.stdout
@@ -704,6 +706,86 @@ class TestBuildScripts:
         assert "2 Cochrane reviews graded across 4 dimensions" in html
         assert html == index_html
         assert "Pipeline complete. Artifacts:" in result.stdout
+
+
+class TestStatisticalCore:
+    """Direct numeric unit tests for the spearman/rank_data statistical core.
+
+    These exercise the tie-corrected Spearman path (Pearson-on-ranks). The
+    tie-uncorrected 1 - 6*sum(d^2)/(n*(n^2-1)) shortcut previously used here
+    diverges from the true coefficient whenever ranks are tied.
+    """
+
+    def test_rank_data_averages_ties(self):
+        import build_concordance
+
+        assert build_concordance.rank_data([1, 2, 2, 3]) == [1.0, 2.5, 2.5, 4.0]
+        # No-tie case: plain 1..n ranks.
+        assert build_concordance.rank_data([10, 30, 20]) == [1.0, 3.0, 2.0]
+
+    def test_spearman_no_ties_matches_reference(self):
+        import build_concordance
+
+        rho, _ = build_concordance.spearman([1, 2, 3, 4, 5], [2, 1, 4, 3, 5])
+        assert abs(rho - 0.8) < 1e-9
+
+    def test_spearman_perfect_monotonic(self):
+        import build_concordance
+
+        rho, p = build_concordance.spearman([1, 2, 3, 4], [10, 20, 30, 40])
+        assert abs(rho - 1.0) < 1e-12
+        assert p == 0
+
+    def test_spearman_tie_corrected_value(self):
+        import build_concordance
+
+        # x has distinct ranks, y has a tie at value 7 (indices 4 and 6 -> ranks 3.5).
+        rho, _ = build_concordance.spearman([1, 2, 3, 4, 5], [5, 6, 7, 8, 7])
+        # scipy.stats.spearmanr reference for this input.
+        assert abs(rho - 0.8207826816681233) < 1e-12
+        # The old tie-uncorrected shortcut would have returned 0.825; guard the regression.
+        assert abs(rho - 0.825) > 1e-4
+
+    def test_spearman_small_n_returns_null(self):
+        import build_concordance
+
+        assert build_concordance.spearman([1, 2], [2, 1]) == (0, 1)
+        assert build_concordance.spearman([1], [1]) == (0, 1)
+
+    def test_spearman_zero_variance_guard(self):
+        import build_concordance
+
+        # Constant y -> zero rank variance must not divide by zero.
+        assert build_concordance.spearman([1, 2, 3, 4], [5, 5, 5, 5]) == (0, 1)
+
+
+class TestScoringEdgeCases:
+    def test_compute_score_insufficient_with_one_component(self):
+        import build_unified
+
+        assert build_unified.compute_score(50, None, None, None) == (None, "Insufficient")
+
+    def test_compute_score_two_components_reweights(self):
+        import build_unified
+
+        score, grade = build_unified.compute_score(80, 80, None, None)
+        assert score == 80.0
+        assert grade == "A"
+
+    def test_summary_median_even_count_is_midpoint_mean(self):
+        import build_unified
+
+        reviews = [{"quality_score": x, "quality_grade": "A"} for x in [10, 20, 30, 40]]
+        payload = build_unified._summary_payload(reviews)
+        # True median of an even-length set is the mean of the two middle values.
+        assert payload["median_score"] == 25.0
+
+    def test_summary_median_odd_count(self):
+        import build_unified
+
+        reviews = [{"quality_score": x, "quality_grade": "A"} for x in [10, 20, 30]]
+        payload = build_unified._summary_payload(reviews)
+        assert payload["median_score"] == 20
 
 
 if __name__ == "__main__":
